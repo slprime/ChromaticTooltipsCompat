@@ -1,0 +1,21 @@
+{
+	"modListVersion": 2,
+	"modList": [{
+		"modid": "${modId}",
+		"name": "${modName}",
+		"description": "ChromaticTooltipsCompat is an addon that provides compatibility between Chromatic Tooltips and other mods, enabling them to use the same styled, extended tooltip system without modifying their code.",
+		"version": "${modVersion}",
+		"mcversion": "${minecraftVersion}",
+		"url": "https://github.com/slprime/ChromaticTooltipsCompat",
+		"updateUrl": "",
+		"authorList": ["SLPrime"],
+		"credits": "",
+		"logoFile": "",
+		"screenshots": [],
+		"parent": "",
+		"requiredMods": [],
+		"dependencies": [],
+		"dependants": [],
+		"useDependencyInformation": false
+	}]
+}

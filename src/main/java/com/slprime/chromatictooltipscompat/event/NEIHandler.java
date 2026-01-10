@@ -1,0 +1,212 @@
+package com.slprime.chromatictooltipscompat.event;
+
+import java.awt.Point;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+
+import com.slprime.chromatictooltips.TooltipHandler;
+import com.slprime.chromatictooltips.api.EnricherPlace;
+import com.slprime.chromatictooltips.api.ITooltipComponent;
+import com.slprime.chromatictooltips.api.ITooltipEnricher;
+import com.slprime.chromatictooltips.api.TooltipContext;
+import com.slprime.chromatictooltips.api.TooltipLines;
+import com.slprime.chromatictooltips.api.TooltipModifier;
+import com.slprime.chromatictooltips.event.HotkeyEnricherEvent;
+import com.slprime.chromatictooltips.event.ItemTitleEnricherEvent;
+import com.slprime.chromatictooltips.event.StackSizeEnricherEvent;
+import com.slprime.chromatictooltips.event.TextLinesConverterEvent;
+import com.slprime.chromatictooltips.util.ClientUtil;
+
+import codechicken.lib.gui.GuiDraw;
+import codechicken.lib.gui.GuiDraw.ITooltipLineHandler;
+import codechicken.nei.NEIClientUtils;
+import codechicken.nei.guihook.GuiContainerManager;
+import codechicken.nei.guihook.IContainerTooltipHandler;
+import codechicken.nei.recipe.StackInfo;
+import codechicken.nei.util.ItemUntranslator;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
+public class NEIHandler {
+
+    protected static class SecondTitleEnricher implements ITooltipEnricher {
+
+        public String sectionId() {
+            return "untranslator";
+        }
+
+        public EnricherPlace place() {
+            return EnricherPlace.HEADER;
+        }
+
+        public EnumSet<TooltipModifier> mode() {
+            return EnumSet.of(TooltipModifier.NONE);
+        }
+
+        public TooltipLines build(TooltipContext context) {
+
+            if (context.getStack() != null) {
+                final String subtitle = ItemUntranslator.getInstance()
+                    .getItemStackDisplayName(context.getStack());
+
+                if (subtitle != null && !subtitle.isEmpty()) {
+                    return new TooltipLines(EnumChatFormatting.DARK_GRAY + subtitle);
+                }
+            }
+
+            return null;
+        }
+    }
+
+    protected static class TooltipComponentCompat implements ITooltipComponent {
+
+        protected final ITooltipLineHandler lineHandler;
+
+        public TooltipComponentCompat(ITooltipLineHandler lineHandler) {
+            this.lineHandler = lineHandler;
+        }
+
+        public int getWidth() {
+            return this.lineHandler.getSize().width;
+        }
+
+        public int getHeight() {
+            return this.lineHandler.getSize().height;
+        }
+
+        public int getSpacing() {
+            return 0;
+        }
+
+        public void draw(int x, int y, int availableWidth, TooltipContext context) {
+            this.lineHandler.draw(x, y);
+        }
+
+        @Override
+        public int hashCode() {
+            return this.lineHandler.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+
+            if (obj instanceof TooltipComponentCompat other) {
+                return this.lineHandler.equals(other.lineHandler);
+            }
+
+            return false;
+        }
+
+    }
+
+    protected static List<ITooltipLineHandler> tipLineHandlers = new ArrayList<>();
+
+    public static void registerHandler() {
+        NEIHandler instance = new NEIHandler();
+        FMLCommonHandler.instance()
+            .bus()
+            .register(instance);
+        MinecraftForge.EVENT_BUS.register(instance);
+        TooltipHandler.addEnricherAfter("title", new SecondTitleEnricher());
+
+        try {
+            final Field field = GuiDraw.class.getDeclaredField("tipLineHandlers");
+            field.setAccessible(true);
+            NEIHandler.tipLineHandlers = (List<ITooltipLineHandler>) field.get(null);
+        } catch (Exception ex) {}
+
+    }
+
+    protected List<IContainerTooltipHandler> getInstanceTooltipHandlers() {
+        final GuiContainer gui = NEIClientUtils.getGuiContainer();
+        return Collections.unmodifiableList(
+            gui != null && GuiContainerManager.getManager(gui) != null
+                ? GuiContainerManager.getManager(gui).instanceTooltipHandlers
+                : new ArrayList<>());
+    }
+
+    @SubscribeEvent
+    public void onItemTitleEnricherEvent(ItemTitleEnricherEvent event) {
+        final ItemStack stack = event.context.getStack();
+        final GuiContainer gui = NEIClientUtils.getGuiContainer();
+        List<String> namelist = new ArrayList<>();
+        namelist.add(event.displayName);
+
+        for (IContainerTooltipHandler handler : getInstanceTooltipHandlers()) {
+            namelist = handler.handleItemDisplayName(gui, stack, namelist);
+        }
+
+        if (!namelist.isEmpty()) {
+            event.displayName = namelist.get(0);
+        }
+
+    }
+
+    @SubscribeEvent
+    public void onItemInfoEnricherEvent(ItemTooltipEvent event) {
+        final GuiContainer gui = NEIClientUtils.getGuiContainer();
+        final ItemStack stack = event.itemStack;
+        final Point mouse = ClientUtil.getMousePosition();
+        List<String> tooltip = new ArrayList<>();
+
+        for (IContainerTooltipHandler handler : getInstanceTooltipHandlers()) {
+            tooltip = handler.handleItemTooltip(gui, stack, mouse.x, mouse.y, tooltip);
+        }
+
+        event.toolTip.addAll(tooltip);
+    }
+
+    @SubscribeEvent
+    public void onStackSizeEnricherEvent(StackSizeEnricherEvent event) {
+        event.fluid = StackInfo.getFluid(event.context.getStack());
+    }
+
+    @SubscribeEvent
+    public void onHotkeyEnricherEvent(HotkeyEnricherEvent event) {
+        final GuiContainer gui = NEIClientUtils.getGuiContainer();
+        final int mouseX = event.context.getMouseX();
+        final int mouseY = event.context.getMouseY();
+
+        for (IContainerTooltipHandler handler : getInstanceTooltipHandlers()) {
+            event.hotkeys = handler.handleHotkeys(gui, mouseX, mouseY, event.hotkeys);
+        }
+
+    }
+
+    @SubscribeEvent
+    public void onTextLinesConverterEvent(TextLinesConverterEvent event) {
+
+        if (NEIHandler.tipLineHandlers.isEmpty()) {
+            return;
+        }
+
+        final List<Object> list = new ArrayList<>();
+
+        for (Object obj : event.list) {
+            if (obj instanceof String str && !str.isEmpty()) {
+                final ITooltipLineHandler lineHandler = GuiDraw.getTipLine(str);
+                if (lineHandler != null) {
+                    list.add(new TooltipComponentCompat(lineHandler));
+                } else {
+                    list.add(obj);
+                }
+            } else {
+                list.add(obj);
+            }
+        }
+
+        event.list.clear();
+        event.list.addAll(list);
+        NEIHandler.tipLineHandlers.clear();
+    }
+
+}
