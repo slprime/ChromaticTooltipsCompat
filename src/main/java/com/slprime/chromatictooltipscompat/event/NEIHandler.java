@@ -156,10 +156,17 @@ public class NEIHandler {
         final GuiContainer gui = NEIClientUtils.getGuiContainer();
         final ItemStack stack = event.itemStack;
         final Point mouse = ClientUtil.getMousePosition();
+        final String displayName = event.itemStack.getDisplayName();
         List<String> tooltip = new ArrayList<>();
+        tooltip.add(displayName); // temporary name added for information gathering
 
         for (IContainerTooltipHandler handler : getInstanceTooltipHandlers()) {
             tooltip = handler.handleItemTooltip(gui, stack, mouse.x, mouse.y, tooltip);
+        }
+
+        if (!tooltip.isEmpty() && tooltip.get(0)
+            .contains(displayName)) {
+            tooltip.remove(0); // remove temporary name
         }
 
         event.toolTip.addAll(tooltip);
