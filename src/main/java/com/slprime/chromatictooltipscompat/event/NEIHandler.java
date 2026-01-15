@@ -10,6 +10,7 @@ import java.util.List;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
@@ -34,6 +35,7 @@ import codechicken.nei.guihook.IContainerTooltipHandler;
 import codechicken.nei.recipe.StackInfo;
 import codechicken.nei.util.ItemUntranslator;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class NEIHandler {
@@ -151,30 +153,26 @@ public class NEIHandler {
 
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void onItemInfoEnricherEvent(ItemTooltipEvent event) {
         final GuiContainer gui = NEIClientUtils.getGuiContainer();
         final ItemStack stack = event.itemStack;
         final Point mouse = ClientUtil.getMousePosition();
-        final String displayName = event.itemStack.getDisplayName();
-        List<String> tooltip = new ArrayList<>();
-        tooltip.add(displayName); // temporary name added for information gathering
+        List<String> tooltip = new ArrayList<>(event.toolTip);
 
         for (IContainerTooltipHandler handler : getInstanceTooltipHandlers()) {
             tooltip = handler.handleItemTooltip(gui, stack, mouse.x, mouse.y, tooltip);
         }
 
-        if (!tooltip.isEmpty() && tooltip.get(0)
-            .contains(displayName)) {
-            tooltip.remove(0); // remove temporary name
-        }
-
+        event.toolTip.clear();
         event.toolTip.addAll(tooltip);
     }
 
     @SubscribeEvent
     public void onStackSizeEnricherEvent(StackSizeEnricherEvent event) {
-        event.fluid = StackInfo.getFluid(event.context.getStack());
+        if (event.fluid == null) {
+            event.fluid = StackInfo.getFluid(event.context.getStack());
+        }
     }
 
     @SubscribeEvent
@@ -189,30 +187,27 @@ public class NEIHandler {
 
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void onTextLinesConverterEvent(TextLinesConverterEvent event) {
 
         if (NEIHandler.tipLineHandlers.isEmpty()) {
             return;
         }
 
-        final List<Object> list = new ArrayList<>();
-
-        for (Object obj : event.list) {
-            if (obj instanceof String str && !str.isEmpty()) {
-                final ITooltipLineHandler lineHandler = GuiDraw.getTipLine(str);
+        for (int i = 0; i < event.list.size(); i++) {
+            if (event.list.get(i) instanceof String str && !str.isEmpty()) {
+                final ITooltipLineHandler lineHandler = GuiDraw
+                    .getTipLine(EnumChatFormatting.getTextWithoutFormattingCodes(str));
                 if (lineHandler != null) {
-                    list.add(new TooltipComponentCompat(lineHandler));
-                } else {
-                    list.add(obj);
+                    event.list.set(i, new TooltipComponentCompat(lineHandler));
                 }
-            } else {
-                list.add(obj);
             }
         }
 
-        event.list.clear();
-        event.list.addAll(list);
+    }
+
+    @SubscribeEvent
+    public void onScreenPostDraw(DrawScreenEvent.Post event) {
         NEIHandler.tipLineHandlers.clear();
     }
 

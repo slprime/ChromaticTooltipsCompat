@@ -29,6 +29,7 @@ public class Config {
     public static boolean galacticraftcoreEnabled = true;
     public static boolean gendustryEnabled = true;
     public static boolean gregtechEnabled = true;
+    public static boolean gtnhlibEnabled = true;
     public static boolean holoinventoryEnabled = true;
     public static boolean inventoryTweaksEnabled = true;
     public static boolean logisticsPipesEnabled = true;
@@ -188,6 +189,12 @@ public class Config {
             Configuration.CATEGORY_GENERAL,
             gregtechEnabled,
             "Enable compatibility with GregTech");
+
+        gtnhlibEnabled = configuration.getBoolean(
+            "gtnhlibEnabled",
+            Configuration.CATEGORY_GENERAL,
+            gtnhlibEnabled,
+            "Enable compatibility with GTNH Lib");
 
         holoinventoryEnabled = configuration.getBoolean(
             "holoinventoryEnabled",

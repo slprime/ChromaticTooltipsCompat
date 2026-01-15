@@ -23,6 +23,7 @@ public enum TargetedMod implements ITargetMod {
     WAILA( null, "Waila"),
     WAWLA( null, "wawla"),
     NEI_CUSTOM_DIAGRAM( null, "neicustomdiagram"),
+    GTNH_LIB( null, "gtnhlib"),
     GREGTECH( null, "gregtech");
     // spotless:on
 

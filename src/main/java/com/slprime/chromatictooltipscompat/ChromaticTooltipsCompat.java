@@ -58,6 +58,7 @@ public class ChromaticTooltipsCompat {
         public static final String APPLECORE = "AppleCore";
         public static final String WAWLA = "wawla";
         public static final String TCONSTRUCT = "TConstruct";
+        public static final String DRACONIC_EVOLUTION = "DraconicEvolution";
 
     }
 }

@@ -10,6 +10,7 @@ import com.slprime.chromatictooltips.util.ItemStackFilterParser;
 import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
 import com.slprime.chromatictooltipscompat.event.AppleCoreHandler;
 import com.slprime.chromatictooltipscompat.event.CompatHander;
+import com.slprime.chromatictooltipscompat.event.DraconicEvolutionHandler;
 import com.slprime.chromatictooltipscompat.event.EnderCoreHandler;
 import com.slprime.chromatictooltipscompat.event.NEIHandler;
 import com.slprime.chromatictooltipscompat.event.TConstructHandler;
@@ -44,6 +45,10 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 
         if (Config.tinkersConstructEnabled && Loader.isModLoaded(ModIds.TCONSTRUCT)) {
             TConstructHandler.registerHandler();
+        }
+
+        if (Config.draconicEvolutionEnabled && Loader.isModLoaded(ModIds.DRACONIC_EVOLUTION)) {
+            DraconicEvolutionHandler.registerHandler();
         }
 
         if (ClientUtil.mc()

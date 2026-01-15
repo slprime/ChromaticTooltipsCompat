@@ -307,7 +307,7 @@ public class CompatHander {
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onTextLinesConverterEvent(ItemTooltipEvent event) {
+    public void onItemTooltipEvent(ItemTooltipEvent event) {
         final ItemStackKey key = new ItemStackKey(event.itemStack);
         Set<TooltipLineModifier> modifiers = MODIFIERS.get(key);
 

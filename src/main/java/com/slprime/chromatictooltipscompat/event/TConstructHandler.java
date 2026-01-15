@@ -42,7 +42,7 @@ public class TConstructHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onTextLinesConverterEvent(ItemTooltipEvent event) {
+    public void onItemTooltipEvent(ItemTooltipEvent event) {
 
         if (event.itemStack.getItem() instanceof ToolCore) {
             final String attackDamage = EnumChatFormatting.getTextWithoutFormattingCodes(

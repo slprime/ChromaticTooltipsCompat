@@ -93,9 +93,9 @@ public enum Mixins implements IMixins {
         .setApplyIf(() -> Config.neicustomdiagramEnabled)
         .setPhase(Phase.LATE)),
 
-    GREGTECH(new MixinBuilder("GregTech").addRequiredMod(TargetedMod.GREGTECH)
-        .addClientMixins("gregtech.AnimatedTooltipHandlerMixin")
-        .setApplyIf(() -> Config.gregtechEnabled)
+    GTNH_LIB(new MixinBuilder("GregTech").addRequiredMod(TargetedMod.GTNH_LIB)
+        .addClientMixins("gtnhlib.AnimatedTooltipHandlerMixin")
+        .setApplyIf(() -> Config.gtnhlibEnabled)
         .setPhase(Phase.LATE));
 
     private final MixinBuilder builder;
