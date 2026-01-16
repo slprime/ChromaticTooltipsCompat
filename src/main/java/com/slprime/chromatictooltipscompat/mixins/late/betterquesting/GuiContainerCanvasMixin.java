@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 import com.slprime.chromatictooltips.TooltipHandler;
+import com.slprime.chromatictooltipscompat.ClientUtil;
 
 import betterquesting.api2.client.gui.GuiContainerCanvas;
 
@@ -32,7 +33,7 @@ public class GuiContainerCanvasMixin {
     protected void renderToolTip(ItemStack stack, int x, int y) {
         TooltipHandler.drawHoveringText(
             TooltipHandler.builder()
-                .stack(stack)
+                .stack(ClientUtil.prepareItemStack(stack))
                 .context("betterquesting")
                 .build());
     }

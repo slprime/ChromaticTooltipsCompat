@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 import com.slprime.chromatictooltips.TooltipHandler;
 import com.slprime.chromatictooltipscompat.ClientProxy;
+import com.slprime.chromatictooltipscompat.ClientUtil;
 
 import betterquesting.api.utils.RenderUtils;
 
@@ -32,7 +33,7 @@ public class RenderUtilsMixin {
 
         TooltipHandler.drawHoveringText(
             TooltipHandler.builder()
-                .stack(effectiveStack)
+                .stack(ClientUtil.prepareItemStack(effectiveStack))
                 .lines(textLines)
                 .context("betterquesting")
                 .build());

@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 import com.slprime.chromatictooltips.TooltipHandler;
 import com.slprime.chromatictooltips.api.EnricherPlace;
@@ -22,6 +21,7 @@ import com.slprime.chromatictooltips.api.TooltipContext;
 import com.slprime.chromatictooltips.api.TooltipLines;
 import com.slprime.chromatictooltips.api.TooltipModifier;
 import com.slprime.chromatictooltips.event.HotkeyEnricherEvent;
+import com.slprime.chromatictooltips.event.ItemInfoEnricherEvent;
 import com.slprime.chromatictooltips.event.ItemTitleEnricherEvent;
 import com.slprime.chromatictooltips.event.StackSizeEnricherEvent;
 import com.slprime.chromatictooltips.event.TextLinesConverterEvent;
@@ -128,12 +128,13 @@ public class NEIHandler {
 
     }
 
+    public static ItemStack prepareNEIItemStack(ItemStack stack) {
+        return StackInfo.loadFromNBT(StackInfo.itemStackToNBT(stack));
+    }
+
     protected List<IContainerTooltipHandler> getInstanceTooltipHandlers() {
-        final GuiContainer gui = NEIClientUtils.getGuiContainer();
-        return Collections.unmodifiableList(
-            gui != null && GuiContainerManager.getManager(gui) != null
-                ? GuiContainerManager.getManager(gui).instanceTooltipHandlers
-                : new ArrayList<>());
+        final GuiContainerManager manager = GuiContainerManager.getManager();
+        return Collections.unmodifiableList(manager != null ? manager.instanceTooltipHandlers : new ArrayList<>());
     }
 
     @SubscribeEvent
@@ -154,18 +155,24 @@ public class NEIHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onItemInfoEnricherEvent(ItemTooltipEvent event) {
+    public void onItemInfoEnricherEvent(ItemInfoEnricherEvent event) {
         final GuiContainer gui = NEIClientUtils.getGuiContainer();
-        final ItemStack stack = event.itemStack;
+        final ItemStack stack = event.context.getStack();
         final Point mouse = ClientUtil.getMousePosition();
-        List<String> tooltip = new ArrayList<>(event.toolTip);
+        final String displayName = stack.getDisplayName();
+        List<String> tooltip = new ArrayList<>();
+        tooltip.add(displayName); // temporary name added for information gathering
 
         for (IContainerTooltipHandler handler : getInstanceTooltipHandlers()) {
             tooltip = handler.handleItemTooltip(gui, stack, mouse.x, mouse.y, tooltip);
         }
 
-        event.toolTip.clear();
-        event.toolTip.addAll(tooltip);
+        if (!tooltip.isEmpty() && tooltip.get(0)
+            .contains(displayName)) {
+            tooltip.remove(0); // remove temporary name
+        }
+
+        event.tooltip.addAll(tooltip);
     }
 
     @SubscribeEvent

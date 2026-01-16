@@ -22,6 +22,7 @@ import com.slprime.chromatictooltips.TooltipHandler;
 import com.slprime.chromatictooltips.api.ITooltipComponent;
 import com.slprime.chromatictooltips.api.TooltipContext;
 import com.slprime.chromatictooltips.component.SpaceComponent;
+import com.slprime.chromatictooltipscompat.ClientUtil;
 
 @Mixin(RichTooltip.class)
 public class RichTooltipMixin {
@@ -139,7 +140,7 @@ public class RichTooltipMixin {
     private void chromatictooltips$onDraw(GuiContext context, ItemStack stack, CallbackInfo ci) {
 
         if (stack != null) {
-            TooltipHandler.drawHoveringText(stack, null);
+            TooltipHandler.drawHoveringText(ClientUtil.prepareItemStack(stack), null);
             ci.cancel();
         }
 

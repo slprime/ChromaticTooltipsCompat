@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 import com.gtnewhorizons.modularui.common.internal.wrapper.ModularGui;
 import com.slprime.chromatictooltips.TooltipHandler;
+import com.slprime.chromatictooltipscompat.ClientUtil;
 
 @Mixin(ModularGui.class)
 public class ModularGuiMixin {
@@ -28,7 +29,7 @@ public class ModularGuiMixin {
             lines = overwriteItemStackTooltip.apply(lines);
         }
 
-        TooltipHandler.drawHoveringText(stack, lines);
+        TooltipHandler.drawHoveringText(ClientUtil.prepareItemStack(stack), lines);
     }
 
 }
