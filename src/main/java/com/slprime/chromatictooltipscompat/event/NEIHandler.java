@@ -129,7 +129,7 @@ public class NEIHandler {
     }
 
     public static ItemStack prepareNEIItemStack(ItemStack stack) {
-        return StackInfo.loadFromNBT(StackInfo.itemStackToNBT(stack));
+        return StackInfo.normalizeRecipeQueryStack(stack);
     }
 
     protected List<IContainerTooltipHandler> getInstanceTooltipHandlers() {
