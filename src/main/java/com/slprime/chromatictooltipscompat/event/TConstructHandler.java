@@ -27,9 +27,9 @@ public class TConstructHandler {
     @SubscribeEvent
     public void onAttributeEnricherEvent(AttributeEnricherEvent event) {
 
-        if (event.context.getStack()
+        if (event.context.getItemStack()
             .getItem() instanceof ToolCore toolCore) {
-            final NBTTagCompound tags = event.context.getStack()
+            final NBTTagCompound tags = event.context.getItemStack()
                 .getTagCompound();
 
             if (tags != null && tags.hasKey("InfiTool")) {

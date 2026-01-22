@@ -5,8 +5,9 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.item.ItemStack;
 
-import com.slprime.chromatictooltips.util.ClientUtil;
+import com.slprime.chromatictooltips.TooltipHandler;
 import com.slprime.chromatictooltips.util.ItemStackFilterParser;
+import com.slprime.chromatictooltips.util.TooltipUtils;
 import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
 import com.slprime.chromatictooltipscompat.event.AppleCoreHandler;
 import com.slprime.chromatictooltipscompat.event.CompatHander;
@@ -15,6 +16,7 @@ import com.slprime.chromatictooltipscompat.event.EnderCoreHandler;
 import com.slprime.chromatictooltipscompat.event.NEIHandler;
 import com.slprime.chromatictooltipscompat.event.TConstructHandler;
 import com.slprime.chromatictooltipscompat.filter.GTTierFilterParser;
+import com.slprime.chromatictooltipscompat.util.NEITooltipRequestResolver;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -29,6 +31,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 
         if (Config.notEnoughItemsEnabled && Loader.isModLoaded(ModIds.NEI)) {
             NEIHandler.registerHandler();
+            TooltipHandler.addRequestResolver(new NEITooltipRequestResolver());
         }
 
         if (Config.appleCoreEnabled && Loader.isModLoaded(ModIds.APPLECORE)) {
@@ -51,7 +54,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
             DraconicEvolutionHandler.registerHandler();
         }
 
-        if (ClientUtil.mc()
+        if (TooltipUtils.mc()
             .getResourceManager() instanceof IReloadableResourceManager manager) {
             manager.registerReloadListener(this);
         } else {

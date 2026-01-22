@@ -4,7 +4,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
 import com.enderio.core.client.handlers.ClientHandler;
-import com.slprime.chromatictooltips.util.ClientUtil;
+import com.slprime.chromatictooltips.util.TooltipUtils;
 
 @Mixin(ClientHandler.class)
 public class ClientHandlerMixin {
@@ -16,7 +16,7 @@ public class ClientHandlerMixin {
      */
     @Overwrite(remap = false)
     public static boolean isShiftDown() {
-        return ClientUtil.isShiftKeyDown();
+        return TooltipUtils.isShiftKeyDown();
     }
 
 }

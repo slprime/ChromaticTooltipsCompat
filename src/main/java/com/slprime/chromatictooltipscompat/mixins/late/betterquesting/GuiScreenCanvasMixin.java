@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.slprime.chromatictooltips.TooltipHandler;
-import com.slprime.chromatictooltipscompat.ClientUtil;
 
 import betterquesting.api2.client.gui.GuiScreenCanvas;
 
@@ -36,7 +35,7 @@ public class GuiScreenCanvasMixin {
     protected void renderToolTip(ItemStack stack, int x, int y, CallbackInfo ci) {
         TooltipHandler.drawHoveringText(
             TooltipHandler.builder()
-                .stack(ClientUtil.prepareItemStack(stack))
+                .stack(stack)
                 .context("betterquesting")
                 .build());
         ci.cancel();

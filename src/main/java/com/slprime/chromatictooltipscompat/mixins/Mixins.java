@@ -93,9 +93,19 @@ public enum Mixins implements IMixins {
         .setApplyIf(() -> Config.neicustomdiagramEnabled)
         .setPhase(Phase.LATE)),
 
-    GTNH_LIB(new MixinBuilder("GregTech").addRequiredMod(TargetedMod.GTNH_LIB)
+    GTNH_LIB(new MixinBuilder("GTNHLib").addRequiredMod(TargetedMod.GTNH_LIB)
         .addClientMixins("gtnhlib.AnimatedTooltipHandlerMixin")
         .setApplyIf(() -> Config.gtnhlibEnabled)
+        .setPhase(Phase.LATE)),
+
+    GREGTECH(new MixinBuilder("GregTech").addRequiredMod(TargetedMod.GREGTECH)
+        .addClientMixins("gregtech.GTGenericItemMixin")
+        .setApplyIf(() -> Config.gregtechEnabled)
+        .setPhase(Phase.LATE)),
+
+    AE2FC(new MixinBuilder("AE2 Fluid Crafting").addRequiredMod(TargetedMod.AE2FC)
+        .addClientMixins("ae2fc.BlockCertusQuartzTankMixin")
+        .setApplyIf(() -> Config.ae2fcEnabled)
         .setPhase(Phase.LATE));
 
     private final MixinBuilder builder;

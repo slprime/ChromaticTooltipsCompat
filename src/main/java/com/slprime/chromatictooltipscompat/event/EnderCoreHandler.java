@@ -25,7 +25,7 @@ public class EnderCoreHandler {
     public void onEnchantmentEvent(EnchantmentEnricherEvent event) {
         for (EnchantmentData ehchData : event.enchantments) {
             if (ehchData.hint.isEmpty() && ehchData.enchantment instanceof IAdvancedEnchant advancedEnchant) {
-                ehchData.hint.addAll(Arrays.asList(advancedEnchant.getTooltipDetails(event.context.getStack())));
+                ehchData.hint.addAll(Arrays.asList(advancedEnchant.getTooltipDetails(event.context.getItemStack())));
             }
         }
     }

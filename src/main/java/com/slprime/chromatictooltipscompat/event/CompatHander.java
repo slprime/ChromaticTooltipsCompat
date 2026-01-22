@@ -17,7 +17,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import org.lwjgl.input.Keyboard;
 
 import com.slprime.chromatictooltips.api.TooltipLines;
-import com.slprime.chromatictooltips.util.ClientUtil;
+import com.slprime.chromatictooltips.util.TooltipUtils;
 import com.slprime.chromatictooltipscompat.Config;
 
 import codechicken.nei.util.ItemStackKey;
@@ -318,7 +318,7 @@ public class CompatHander {
                         .contains(rule.line));
                 event.toolTip.add(rule.modifier);
             }
-        } else if (ClientUtil.getMetaHash() == 0) {
+        } else if (TooltipUtils.getMetaHash() == 0) {
             MODIFIERS.put(key, modifiers = new HashSet<>());
 
             for (TooltipLineModifier rule : TOOLTIPS) {

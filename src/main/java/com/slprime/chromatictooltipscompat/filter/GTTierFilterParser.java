@@ -8,6 +8,8 @@ import java.util.function.Predicate;
 
 import net.minecraft.item.ItemStack;
 
+import com.slprime.chromatictooltips.api.TooltipRequest;
+
 import bartworks.util.BWUtil;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.ItemList;
@@ -21,7 +23,7 @@ import gregtech.common.blocks.ItemMachines;
 import gregtech.common.tileentities.machines.multi.MTEDrillerBase;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 
-public class GTTierFilterParser implements Function<String, Predicate<ItemStack>> {
+public class GTTierFilterParser implements Function<String, Predicate<TooltipRequest>> {
 
     protected static final List<String> tiers = Arrays.asList(
         "ULV", // 0
@@ -54,14 +56,19 @@ public class GTTierFilterParser implements Function<String, Predicate<ItemStack>
     }
 
     @Override
-    public Predicate<ItemStack> apply(String tierStr) {
+    public Predicate<TooltipRequest> apply(String tierStr) {
         final int tier = tiers.indexOf(tierStr.toUpperCase());
 
         if (tier == -1) {
             return stack -> false;
         }
 
-        return stack -> {
+        return request -> {
+            final ItemStack stack = request.itemStack;
+
+            if (stack == null) {
+                return false;
+            }
 
             if (stack.getItem() instanceof ItemMachines) {
                 final IMetaTileEntity meta = ItemMachines.getMetaTileEntity(stack);

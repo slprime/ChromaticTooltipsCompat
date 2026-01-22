@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.slprime.chromatictooltips.TooltipHandler;
-import com.slprime.chromatictooltipscompat.ClientUtil;
 
 import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.guihook.IContainerTooltipHandler;
@@ -48,7 +47,7 @@ public class GuiContainerManagerMixin {
             }
         }
 
-        TooltipHandler.drawHoveringText(showTooltip ? ClientUtil.prepareItemStack(stack) : null, tooltip);
+        TooltipHandler.drawHoveringText(showTooltip ? stack : null, tooltip);
         ci.cancel();
     }
 

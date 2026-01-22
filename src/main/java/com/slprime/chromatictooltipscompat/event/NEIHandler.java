@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.FluidStack;
 
 import com.slprime.chromatictooltips.TooltipHandler;
 import com.slprime.chromatictooltips.api.EnricherPlace;
@@ -22,10 +23,10 @@ import com.slprime.chromatictooltips.api.TooltipLines;
 import com.slprime.chromatictooltips.api.TooltipModifier;
 import com.slprime.chromatictooltips.event.HotkeyEnricherEvent;
 import com.slprime.chromatictooltips.event.ItemInfoEnricherEvent;
-import com.slprime.chromatictooltips.event.ItemTitleEnricherEvent;
 import com.slprime.chromatictooltips.event.StackSizeEnricherEvent;
 import com.slprime.chromatictooltips.event.TextLinesConverterEvent;
-import com.slprime.chromatictooltips.util.ClientUtil;
+import com.slprime.chromatictooltips.event.TitleEnricherEvent;
+import com.slprime.chromatictooltips.util.TooltipUtils;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.lib.gui.GuiDraw.ITooltipLineHandler;
@@ -56,9 +57,9 @@ public class NEIHandler {
 
         public TooltipLines build(TooltipContext context) {
 
-            if (context.getStack() != null) {
+            if (context.getItemStack() != null) {
                 final String subtitle = ItemUntranslator.getInstance()
-                    .getItemStackDisplayName(context.getStack());
+                    .getItemStackDisplayName(context.getItemStack());
 
                 if (subtitle != null && !subtitle.isEmpty()) {
                     return new TooltipLines(EnumChatFormatting.DARK_GRAY + subtitle);
@@ -128,18 +129,19 @@ public class NEIHandler {
 
     }
 
-    public static ItemStack prepareNEIItemStack(ItemStack stack) {
-        return StackInfo.normalizeRecipeQueryStack(stack);
-    }
-
     protected List<IContainerTooltipHandler> getInstanceTooltipHandlers() {
         final GuiContainerManager manager = GuiContainerManager.getManager();
         return Collections.unmodifiableList(manager != null ? manager.instanceTooltipHandlers : new ArrayList<>());
     }
 
     @SubscribeEvent
-    public void onItemTitleEnricherEvent(ItemTitleEnricherEvent event) {
-        final ItemStack stack = event.context.getStack();
+    public void onTitleEnricherEvent(TitleEnricherEvent event) {
+        final ItemStack stack = event.context.getItemStack();
+
+        if (stack == null) {
+            return;
+        }
+
         final GuiContainer gui = NEIClientUtils.getGuiContainer();
         List<String> namelist = new ArrayList<>();
         namelist.add(event.displayName);
@@ -157,8 +159,8 @@ public class NEIHandler {
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onItemInfoEnricherEvent(ItemInfoEnricherEvent event) {
         final GuiContainer gui = NEIClientUtils.getGuiContainer();
-        final ItemStack stack = event.context.getStack();
-        final Point mouse = ClientUtil.getMousePosition();
+        final ItemStack stack = event.context.getItemStack();
+        final Point mouse = TooltipUtils.getMousePosition();
         final String displayName = stack.getDisplayName();
         List<String> tooltip = new ArrayList<>();
         tooltip.add(displayName); // temporary name added for information gathering
@@ -167,8 +169,7 @@ public class NEIHandler {
             tooltip = handler.handleItemTooltip(gui, stack, mouse.x, mouse.y, tooltip);
         }
 
-        if (!tooltip.isEmpty() && tooltip.get(0)
-            .contains(displayName)) {
+        if (!tooltip.isEmpty()) {
             tooltip.remove(0); // remove temporary name
         }
 
@@ -177,19 +178,23 @@ public class NEIHandler {
 
     @SubscribeEvent
     public void onStackSizeEnricherEvent(StackSizeEnricherEvent event) {
-        if (event.fluid == null) {
-            event.fluid = StackInfo.getFluid(event.context.getStack());
+        if (event.containedFluid == null && event.context.getItemStack() != null) {
+            final FluidStack fluid = StackInfo.getFluid(event.context.getItemStack());
+
+            if (fluid != null) {
+                event.containedFluid = fluid.getFluid();
+                event.containedFluidAmount = fluid.amount;
+            }
         }
     }
 
     @SubscribeEvent
     public void onHotkeyEnricherEvent(HotkeyEnricherEvent event) {
         final GuiContainer gui = NEIClientUtils.getGuiContainer();
-        final int mouseX = event.context.getMouseX();
-        final int mouseY = event.context.getMouseY();
+        final Point mouse = TooltipUtils.getMousePosition();
 
         for (IContainerTooltipHandler handler : getInstanceTooltipHandlers()) {
-            event.hotkeys = handler.handleHotkeys(gui, mouseX, mouseY, event.hotkeys);
+            event.hotkeys = handler.handleHotkeys(gui, mouse.x, mouse.y, event.hotkeys);
         }
 
     }

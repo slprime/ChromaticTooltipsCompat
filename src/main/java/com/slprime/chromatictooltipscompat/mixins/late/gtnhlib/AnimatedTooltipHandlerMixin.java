@@ -24,7 +24,7 @@ public class AnimatedTooltipHandlerMixin {
         method = "renderTooltip",
         at = @At(value = "INVOKE", target = "Ljava/util/function/Supplier;get()Ljava/lang/Object;"),
         remap = false)
-    private static Object redirectTooltipGet(Supplier<String> tooltip, ItemTooltipEvent event) {
+    private static Object renderTooltip(Supplier<String> tooltip, ItemTooltipEvent event) {
 
         if (tooltip.get() != null) {
             event.toolTip.add(TooltipHandler.getComponentId(new DyncamicTextComponent(tooltip)));
