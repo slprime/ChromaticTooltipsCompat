@@ -35,7 +35,7 @@ public class GuiScreenCanvasMixin {
     protected void renderToolTip(ItemStack stack, int x, int y, CallbackInfo ci) {
         TooltipHandler.drawHoveringText(
             TooltipHandler.builder()
-                .stack(stack)
+                .target(stack)
                 .context("betterquesting")
                 .build());
         ci.cancel();

@@ -34,7 +34,10 @@ public enum Mixins implements IMixins {
             "enderio.SpecialTooltipHandlerMixin",
             "enderio.EnchantTooltipHandlerMixin",
             "enderio.ClientHandlerMixin",
-            "enderio.TooltipHandlerBurnTimeMixin")
+            "enderio.TooltipHandlerBurnTimeMixin",
+            "enderio.GuiMachineBaseMixin",
+            "enderio.GuiMachineBaseInvoker",
+            "enderio.GuiToolTipMixin")
         .setApplyIf(() -> Config.enderCoreEnabled)
         .setPhase(Phase.LATE)),
 
@@ -99,7 +102,7 @@ public enum Mixins implements IMixins {
         .setPhase(Phase.LATE)),
 
     GREGTECH(new MixinBuilder("GregTech").addRequiredMod(TargetedMod.GREGTECH)
-        .addClientMixins("gregtech.GTGenericItemMixin")
+        .addClientMixins("gregtech.GTGenericItemMixin", "gregtech.ItemFluidDisplayMixin")
         .setApplyIf(() -> Config.gregtechEnabled)
         .setPhase(Phase.LATE)),
 

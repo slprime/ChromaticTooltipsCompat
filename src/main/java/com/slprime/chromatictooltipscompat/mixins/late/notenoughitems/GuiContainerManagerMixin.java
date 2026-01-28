@@ -1,5 +1,6 @@
 package com.slprime.chromatictooltipscompat.mixins.late.notenoughitems;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.enderio.core.client.gui.widget.GuiToolTip;
 import com.slprime.chromatictooltips.TooltipHandler;
+import com.slprime.chromatictooltips.util.TooltipUtils;
+import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
+import com.slprime.chromatictooltipscompat.Config;
+import com.slprime.chromatictooltipscompat.mixins.late.enderio.GuiMachineBaseInvoker;
 
 import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.guihook.IContainerTooltipHandler;
+import cpw.mods.fml.common.Loader;
+import crazypants.enderio.machine.gui.GuiMachineBase;
 
 @Mixin(GuiContainerManager.class)
 public class GuiContainerManagerMixin {
@@ -47,6 +55,11 @@ public class GuiContainerManagerMixin {
             }
         }
 
+        if (Config.enderCoreEnabled && Loader.isModLoaded(ModIds.ENDERCORE)) {
+            // Add Ender IO tooltips
+            this.onEnderIoTooltips(tooltip);
+        }
+
         TooltipHandler.drawHoveringText(showTooltip ? stack : null, tooltip);
         ci.cancel();
     }
@@ -57,8 +70,35 @@ public class GuiContainerManagerMixin {
      */
     @Overwrite(remap = false)
     public static void drawPagedTooltip(FontRenderer font, int x, int y, List<String> list) {
-        if (list.isEmpty()) return;
-        TooltipHandler.drawHoveringText(list);
+        if (!list.isEmpty()) {
+            TooltipHandler.drawHoveringText(list);
+        }
+    }
+
+    private void onEnderIoTooltips(List<String> tooltip) {
+        final GuiContainer gui = TooltipUtils.getGuiContainer();
+
+        if (gui instanceof GuiMachineBase<?>base) {
+            final List<GuiToolTip> progressTooltips = ((GuiMachineBaseInvoker) base).getProgressTooltips();
+            final Point mouse = TooltipUtils.getMousePosition();
+
+            if (progressTooltips == null) {
+                return;
+            }
+
+            for (GuiToolTip tt : progressTooltips) {
+                if (tt.getBounds()
+                    .contains(mouse.x - gui.guiLeft, mouse.y - gui.guiTop)) {
+                    tooltip.addAll(tt.getToolTipText());
+                    break;
+                }
+            }
+
+            for (GuiToolTip tt : progressTooltips) {
+                tt.setVisible(false);
+            }
+        }
+
     }
 
 }

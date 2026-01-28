@@ -32,7 +32,7 @@ public class RenderUtilsMixin {
 
         TooltipHandler.drawHoveringText(
             TooltipHandler.builder()
-                .stack(effectiveStack)
+                .target(effectiveStack)
                 .lines(textLines)
                 .context("betterquesting")
                 .build());

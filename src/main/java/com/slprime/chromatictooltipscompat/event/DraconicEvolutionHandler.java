@@ -30,10 +30,10 @@ public class DraconicEvolutionHandler {
 
     @SubscribeEvent
     public void onAttributeEnricherEvent(AttributeEnricherEvent event) {
-        final ItemStack stack = event.context.getItemStack();
+        final ItemStack stack = event.context.getItem();
 
-        if (stack.getItem() instanceof DraconicSword || stack.getItem() instanceof WyvernSword
-            || stack.getItem() instanceof DraconicDistructionStaff) {
+        if (stack != null && (stack.getItem() instanceof DraconicSword || stack.getItem() instanceof WyvernSword
+            || stack.getItem() instanceof DraconicDistructionStaff)) {
             event.stats.add(new ItemStats.AttackDamageStats(ToolHandler.getBaseAttackDamage(stack)));
             event.stats.add(
                 new ItemStats(
@@ -49,8 +49,8 @@ public class DraconicEvolutionHandler {
     public void onItemTooltipEvent(ItemTooltipEvent event) {
         final ItemStack stack = event.itemStack;
 
-        if (stack.getItem() instanceof DraconicSword || stack.getItem() instanceof WyvernSword
-            || stack.getItem() instanceof DraconicDistructionStaff) {
+        if (stack != null && (stack.getItem() instanceof DraconicSword || stack.getItem() instanceof WyvernSword
+            || stack.getItem() instanceof DraconicDistructionStaff)) {
             final String attackDamage = EnumChatFormatting
                 .getTextWithoutFormattingCodes(StatCollector.translateToLocal("info.de.attackDamage.txt"));
             final String bonusHealthDamage = EnumChatFormatting

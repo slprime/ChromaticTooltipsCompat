@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 
 import net.minecraft.item.ItemStack;
 
-import com.slprime.chromatictooltips.api.TooltipRequest;
+import com.slprime.chromatictooltips.api.TooltipTarget;
 
 import bartworks.util.BWUtil;
 import gregtech.api.GregTechAPI;
@@ -23,7 +23,7 @@ import gregtech.common.blocks.ItemMachines;
 import gregtech.common.tileentities.machines.multi.MTEDrillerBase;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 
-public class GTTierFilterParser implements Function<String, Predicate<TooltipRequest>> {
+public class GTTierFilterParser implements Function<String, Predicate<TooltipTarget>> {
 
     protected static final List<String> tiers = Arrays.asList(
         "ULV", // 0
@@ -56,15 +56,15 @@ public class GTTierFilterParser implements Function<String, Predicate<TooltipReq
     }
 
     @Override
-    public Predicate<TooltipRequest> apply(String tierStr) {
+    public Predicate<TooltipTarget> apply(String tierStr) {
         final int tier = tiers.indexOf(tierStr.toUpperCase());
 
         if (tier == -1) {
-            return stack -> false;
+            return target -> false;
         }
 
-        return request -> {
-            final ItemStack stack = request.itemStack;
+        return target -> {
+            final ItemStack stack = target.getItem();
 
             if (stack == null) {
                 return false;

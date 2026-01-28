@@ -12,32 +12,34 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.FluidStack;
 
-import com.slprime.chromatictooltips.TooltipHandler;
+import com.slprime.chromatictooltips.TooltipRegistry;
 import com.slprime.chromatictooltips.api.EnricherPlace;
 import com.slprime.chromatictooltips.api.ITooltipComponent;
 import com.slprime.chromatictooltips.api.ITooltipEnricher;
 import com.slprime.chromatictooltips.api.TooltipContext;
 import com.slprime.chromatictooltips.api.TooltipLines;
 import com.slprime.chromatictooltips.api.TooltipModifier;
+import com.slprime.chromatictooltips.event.ContextInfoEnricherEvent;
+import com.slprime.chromatictooltips.event.FluidInfoEnricherEvent;
 import com.slprime.chromatictooltips.event.HotkeyEnricherEvent;
-import com.slprime.chromatictooltips.event.ItemInfoEnricherEvent;
-import com.slprime.chromatictooltips.event.StackSizeEnricherEvent;
 import com.slprime.chromatictooltips.event.TextLinesConverterEvent;
 import com.slprime.chromatictooltips.event.TitleEnricherEvent;
 import com.slprime.chromatictooltips.util.TooltipUtils;
+import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
+import com.slprime.chromatictooltipscompat.Config;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.lib.gui.GuiDraw.ITooltipLineHandler;
 import codechicken.nei.NEIClientUtils;
 import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.guihook.IContainerTooltipHandler;
-import codechicken.nei.recipe.StackInfo;
 import codechicken.nei.util.ItemUntranslator;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import gregtech.api.util.GTUtility;
 
 public class NEIHandler {
 
@@ -56,10 +58,16 @@ public class NEIHandler {
         }
 
         public TooltipLines build(TooltipContext context) {
+            ItemStack itemStack = context.getItem();
 
-            if (context.getItemStack() != null) {
+            if (itemStack == null && context.getTarget()
+                .isFluid() && Config.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
+                itemStack = GTUtility.getFluidDisplayStack(context.getFluid(), true);
+            }
+
+            if (itemStack != null) {
                 final String subtitle = ItemUntranslator.getInstance()
-                    .getItemStackDisplayName(context.getItemStack());
+                    .getItemStackDisplayName(itemStack);
 
                 if (subtitle != null && !subtitle.isEmpty()) {
                     return new TooltipLines(EnumChatFormatting.DARK_GRAY + subtitle);
@@ -119,7 +127,7 @@ public class NEIHandler {
             .bus()
             .register(instance);
         MinecraftForge.EVENT_BUS.register(instance);
-        TooltipHandler.addEnricherAfter("title", new SecondTitleEnricher());
+        TooltipRegistry.addEnricherAfter("title", new SecondTitleEnricher());
 
         try {
             final Field field = GuiDraw.class.getDeclaredField("tipLineHandlers");
@@ -134,9 +142,20 @@ public class NEIHandler {
         return Collections.unmodifiableList(manager != null ? manager.instanceTooltipHandlers : new ArrayList<>());
     }
 
+    protected ItemStack getItemStackFromContext(TooltipContext context) {
+        ItemStack stack = context.getItem();
+
+        if (stack == null && context.getTarget()
+            .isFluid() && Config.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
+            stack = GTUtility.getFluidDisplayStack(context.getFluid(), true);
+        }
+
+        return stack;
+    }
+
     @SubscribeEvent
     public void onTitleEnricherEvent(TitleEnricherEvent event) {
-        final ItemStack stack = event.context.getItemStack();
+        final ItemStack stack = getItemStackFromContext(event.context);
 
         if (stack == null) {
             return;
@@ -157,13 +176,12 @@ public class NEIHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onItemInfoEnricherEvent(ItemInfoEnricherEvent event) {
+    public void onContextInfoEnricherEvent(ContextInfoEnricherEvent event) {
         final GuiContainer gui = NEIClientUtils.getGuiContainer();
-        final ItemStack stack = event.context.getItemStack();
         final Point mouse = TooltipUtils.getMousePosition();
-        final String displayName = stack.getDisplayName();
+        final ItemStack stack = getItemStackFromContext(event.context);
         List<String> tooltip = new ArrayList<>();
-        tooltip.add(displayName); // temporary name added for information gathering
+        tooltip.add("Temporary Name"); // temporary name added for information gathering
 
         for (IContainerTooltipHandler handler : getInstanceTooltipHandlers()) {
             tooltip = handler.handleItemTooltip(gui, stack, mouse.x, mouse.y, tooltip);
@@ -176,15 +194,28 @@ public class NEIHandler {
         event.tooltip.addAll(tooltip);
     }
 
-    @SubscribeEvent
-    public void onStackSizeEnricherEvent(StackSizeEnricherEvent event) {
-        if (event.containedFluid == null && event.context.getItemStack() != null) {
-            final FluidStack fluid = StackInfo.getFluid(event.context.getItemStack());
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public void onFluidInfoEnricherEvent(FluidInfoEnricherEvent event) {
+        if (Config.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
+            final ItemStack stack = GTUtility.getFluidDisplayStack(
+                event.context.getFluid()
+                    .getFluid());
 
-            if (fluid != null) {
-                event.containedFluid = fluid.getFluid();
-                event.containedFluidAmount = fluid.amount;
+            if (stack == null) {
+                return;
             }
+
+            List<String> tooltip = new ArrayList<>();
+            tooltip.add("Temporary Name"); // temporary name added for information gathering
+
+            stack.getItem()
+                .addInformation(stack, TooltipUtils.mc().thePlayer, tooltip, false);
+
+            if (!tooltip.isEmpty()) {
+                tooltip.remove(0); // remove temporary name
+            }
+
+            event.tooltip.addAll(tooltip);
         }
     }
 

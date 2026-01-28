@@ -32,7 +32,7 @@ public class GuiContainerCanvasMixin {
     protected void renderToolTip(ItemStack stack, int x, int y) {
         TooltipHandler.drawHoveringText(
             TooltipHandler.builder()
-                .stack(stack)
+                .target(stack)
                 .context("betterquesting")
                 .build());
     }
