@@ -11,7 +11,8 @@ public class Config {
     public static boolean ae2wctEnabled = true;
     public static boolean akashictomeEnabled = true;
     public static boolean appleCoreEnabled = true;
-    public static boolean appliedEnergistics2Enabled = true;
+    public static boolean appliedEnergisticsEnabled = true;
+    public static boolean appliedEnergisticsAmountEnabled = false;
     public static boolean avaritiaEnabled = true;
     public static boolean AWWayofTimeEnabled = true;
     public static boolean backpackEnabled = true;
@@ -82,11 +83,17 @@ public class Config {
             appleCoreEnabled,
             "Enable compatibility with AppleCore");
 
-        appliedEnergistics2Enabled = configuration.getBoolean(
-            "appliedEnergistics2Enabled",
+        appliedEnergisticsEnabled = configuration.getBoolean(
+            "appliedEnergisticsEnabled",
             Configuration.CATEGORY_GENERAL,
-            appliedEnergistics2Enabled,
-            "Enable compatibility with Applied Energistics 2");
+            appliedEnergisticsEnabled,
+            "Enable compatibility with Applied Energistics");
+
+        appliedEnergisticsAmountEnabled = configuration.getBoolean(
+            "appliedEnergisticsAmountEnabled",
+            Configuration.CATEGORY_GENERAL,
+            appliedEnergisticsAmountEnabled,
+            "Enable stack size display for Applied Energistics items");
 
         avaritiaEnabled = configuration.getBoolean(
             "avaritiaEnabled",

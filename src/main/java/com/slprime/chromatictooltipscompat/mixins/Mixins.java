@@ -18,7 +18,10 @@ public enum Mixins implements IMixins {
         .setPhase(Phase.LATE)),
 
     CODECHICKEN_NEI(new MixinBuilder("NotEnoughItems").addRequiredMod(TargetedMod.CODECHICKEN_NEI)
-        .addClientMixins("notenoughitems.GuiContainerManagerMixin", "notenoughitems.LayoutManagerMixin")
+        .addClientMixins(
+            "notenoughitems.GuiContainerManagerMixin",
+            "notenoughitems.LayoutManagerMixin",
+            "notenoughitems.TooltipFilterMixin")
         .setApplyIf(() -> Config.notEnoughItemsEnabled)
         .setPhase(Phase.LATE)),
 
@@ -58,6 +61,10 @@ public enum Mixins implements IMixins {
 
     WAILA(new MixinBuilder("Waila").addRequiredMod(TargetedMod.WAILA)
         .addClientMixins("waila.TooltipHandlerWailaMixin")
+        .setPhase(Phase.LATE)),
+
+    WAILA_RENDER(new MixinBuilder("Waila").addRequiredMod(TargetedMod.WAILA)
+        .addClientMixins("waila.OverlayRendererMixin", "waila.TooltipInvoker", "waila.TooltipMixin")
         .setApplyIf(() -> Config.wailaEnabled)
         .setPhase(Phase.LATE)),
 
@@ -71,9 +78,10 @@ public enum Mixins implements IMixins {
         .setApplyIf(() -> Config.railcraftEnabled)
         .setPhase(Phase.LATE)),
 
-    APPLIED_ENERGISTICS_2(new MixinBuilder("Applied Energistics 2").addRequiredMod(TargetedMod.APPLIED_ENERGISTICS_2)
-        .addClientMixins("appliedenergistics2.GuiInterfaceTerminalMixin")
-        .setApplyIf(() -> Config.appliedEnergistics2Enabled)
+    APPLIED_ENERGISTICS_AMOUNT(new MixinBuilder("Applied Energistics 2")
+        .addRequiredMod(TargetedMod.APPLIED_ENERGISTICS_2)
+        .addClientMixins("appliedenergistics2.GuiInterfaceTerminalMixin", "appliedenergistics2.GuiMEMonitorableMixin")
+        .setApplyIf(() -> Config.appliedEnergisticsEnabled && Config.appliedEnergisticsAmountEnabled)
         .setPhase(Phase.LATE)),
 
     TINKERS_CONSTRUCT(new MixinBuilder("Tinkers Construct").addRequiredMod(TargetedMod.TINKERS_CONSTRUCT)
@@ -101,10 +109,15 @@ public enum Mixins implements IMixins {
         .setApplyIf(() -> Config.gtnhlibEnabled)
         .setPhase(Phase.LATE)),
 
-    GREGTECH(new MixinBuilder("GregTech").addRequiredMod(TargetedMod.GREGTECH)
-        .addClientMixins("gregtech.GTGenericItemMixin", "gregtech.ItemFluidDisplayMixin")
+    GREGTECH_LATE(new MixinBuilder("GregTech").addRequiredMod(TargetedMod.GREGTECH)
+        .addClientMixins("gregtech.ItemFluidDisplayMixin")
         .setApplyIf(() -> Config.gregtechEnabled)
         .setPhase(Phase.LATE)),
+
+    GREGTECH_EARLY(new MixinBuilder("GregTech").addRequiredMod(TargetedMod.GREGTECH)
+        .addClientMixins("gregtech.GTGenericItemMixin")
+        .setApplyIf(() -> Config.gregtechEnabled)
+        .setPhase(Phase.EARLY)),
 
     AE2FC(new MixinBuilder("AE2 Fluid Crafting").addRequiredMod(TargetedMod.AE2FC)
         .addClientMixins("ae2fc.BlockCertusQuartzTankMixin")

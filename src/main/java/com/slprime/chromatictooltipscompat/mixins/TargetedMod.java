@@ -10,22 +10,22 @@ public enum TargetedMod implements ITargetMod {
     // spotless:off
     CODECHICKEN_LIB(null, "CodeChickenCore"),
     CODECHICKEN_NEI(null, "NotEnoughItems"),
-    BETTER_QUESTING( null, "betterquesting"),
-    ENDER_IO_CORE( null, "endercore"),
-    FORESTRY( null, "Forestry"),
-    MODULAR_UI( null, "modularui"),
-    MODULAR_UI2( null, "modularui2"),
-    BOTANIA( null, "Botania"),
-    BINNIE_CORE( null, "BinnieCore"),
-    RAILCRAFT( null, "Railcraft"),
-    APPLIED_ENERGISTICS_2( null, "appliedenergistics2"),
-    TINKERS_CONSTRUCT( null, "TConstruct"),
-    WAILA( null, "Waila"),
-    WAWLA( null, "wawla"),
-    NEI_CUSTOM_DIAGRAM( null, "neicustomdiagram"),
-    GTNH_LIB( null, "gtnhlib"),
-    GREGTECH( null, "gregtech"),
-    AE2FC( null, "ae2fc");
+    BETTER_QUESTING(null, "betterquesting"),
+    ENDER_IO_CORE(null, "endercore"),
+    FORESTRY(null, "Forestry"),
+    MODULAR_UI(null, "modularui"),
+    MODULAR_UI2(null, "modularui2"),
+    BOTANIA(null, "Botania"),
+    BINNIE_CORE(null, "BinnieCore"),
+    RAILCRAFT(null, "Railcraft"),
+    APPLIED_ENERGISTICS_2(null, "appliedenergistics2"),
+    TINKERS_CONSTRUCT(null, "TConstruct"),
+    WAILA(null, "Waila"),
+    WAWLA(null, "wawla"),
+    NEI_CUSTOM_DIAGRAM(null, "neicustomdiagram"),
+    GTNH_LIB(null, "gtnhlib"),
+    GREGTECH( "gregtech.asm.GTCorePlugin", "gregtech"),
+    AE2FC(null, "ae2fc");
     // spotless:on
 
     private final TargetModBuilder builder;

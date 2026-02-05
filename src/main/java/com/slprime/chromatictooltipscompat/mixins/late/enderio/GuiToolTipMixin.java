@@ -11,19 +11,19 @@ import com.enderio.core.client.gui.widget.GuiToolTip;
 @Mixin(GuiToolTip.class)
 public abstract class GuiToolTipMixin {
 
-    @Shadow
+    @Shadow(remap = false)
     protected boolean visible;
 
-    @Shadow
+    @Shadow(remap = false)
     protected Rectangle bounds;
 
-    @Shadow
+    @Shadow(remap = false)
     private int lastMouseX = -1;
 
-    @Shadow
+    @Shadow(remap = false)
     private int lastMouseY = -1;
 
-    @Shadow
+    @Shadow(remap = false)
     protected abstract void updateText();
 
     /**

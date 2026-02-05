@@ -30,7 +30,7 @@ public class DraconicEvolutionHandler {
 
     @SubscribeEvent
     public void onAttributeEnricherEvent(AttributeEnricherEvent event) {
-        final ItemStack stack = event.context.getItem();
+        final ItemStack stack = event.target.getItem();
 
         if (stack != null && (stack.getItem() instanceof DraconicSword || stack.getItem() instanceof WyvernSword
             || stack.getItem() instanceof DraconicDistructionStaff)) {

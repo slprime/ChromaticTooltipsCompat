@@ -18,7 +18,7 @@ public class GuiMachineBaseMixin {
     /**
      * @author SLPrime
      */
-    @Shadow
+    @Shadow(remap = false)
     private List<GuiToolTip> progressTooltips;
 
     /**

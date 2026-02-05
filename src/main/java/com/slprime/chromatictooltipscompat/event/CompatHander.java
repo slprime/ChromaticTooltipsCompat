@@ -63,7 +63,7 @@ public class CompatHander {
                     TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.appliedEnergistics2Enabled) {
+        if (Config.appliedEnergisticsEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(
                     translateToLocal("gui.appliedenergistics2.HoldShift"),

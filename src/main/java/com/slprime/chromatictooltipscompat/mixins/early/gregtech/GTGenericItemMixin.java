@@ -1,4 +1,4 @@
-package com.slprime.chromatictooltipscompat.mixins.late.gregtech;
+package com.slprime.chromatictooltipscompat.mixins.early.gregtech;
 
 import java.util.List;
 

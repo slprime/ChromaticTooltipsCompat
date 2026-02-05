@@ -14,6 +14,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
     modid = ChromaticTooltipsCompat.MODID,
     version = Tags.VERSION,
     name = "ChromaticTooltipsCompat",
+    dependencies = "required-after:chromatictooltips@[1.0.7,);",
     acceptedMinecraftVersions = "[1.7.10]")
 public class ChromaticTooltipsCompat {
 
@@ -59,6 +60,7 @@ public class ChromaticTooltipsCompat {
         public static final String WAWLA = "wawla";
         public static final String TCONSTRUCT = "TConstruct";
         public static final String DRACONIC_EVOLUTION = "DraconicEvolution";
+        public static final String APPLIED_ENERGISTICS2 = "appliedenergistics2";
 
     }
 }

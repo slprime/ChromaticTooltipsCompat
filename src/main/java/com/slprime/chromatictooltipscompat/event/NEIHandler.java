@@ -20,6 +20,7 @@ import com.slprime.chromatictooltips.api.ITooltipEnricher;
 import com.slprime.chromatictooltips.api.TooltipContext;
 import com.slprime.chromatictooltips.api.TooltipLines;
 import com.slprime.chromatictooltips.api.TooltipModifier;
+import com.slprime.chromatictooltips.api.TooltipTarget;
 import com.slprime.chromatictooltips.event.ContextInfoEnricherEvent;
 import com.slprime.chromatictooltips.event.FluidInfoEnricherEvent;
 import com.slprime.chromatictooltips.event.HotkeyEnricherEvent;
@@ -142,12 +143,11 @@ public class NEIHandler {
         return Collections.unmodifiableList(manager != null ? manager.instanceTooltipHandlers : new ArrayList<>());
     }
 
-    protected ItemStack getItemStackFromContext(TooltipContext context) {
-        ItemStack stack = context.getItem();
+    protected ItemStack getItemStackFromContext(TooltipTarget target) {
+        ItemStack stack = target.getItem();
 
-        if (stack == null && context.getTarget()
-            .isFluid() && Config.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
-            stack = GTUtility.getFluidDisplayStack(context.getFluid(), true);
+        if (stack == null && target.isFluid() && Config.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
+            stack = GTUtility.getFluidDisplayStack(target.getFluid(), true);
         }
 
         return stack;
@@ -155,7 +155,7 @@ public class NEIHandler {
 
     @SubscribeEvent
     public void onTitleEnricherEvent(TitleEnricherEvent event) {
-        final ItemStack stack = getItemStackFromContext(event.context);
+        final ItemStack stack = getItemStackFromContext(event.target);
 
         if (stack == null) {
             return;
@@ -179,7 +179,7 @@ public class NEIHandler {
     public void onContextInfoEnricherEvent(ContextInfoEnricherEvent event) {
         final GuiContainer gui = NEIClientUtils.getGuiContainer();
         final Point mouse = TooltipUtils.getMousePosition();
-        final ItemStack stack = getItemStackFromContext(event.context);
+        final ItemStack stack = getItemStackFromContext(event.target);
         List<String> tooltip = new ArrayList<>();
         tooltip.add("Temporary Name"); // temporary name added for information gathering
 
@@ -198,7 +198,7 @@ public class NEIHandler {
     public void onFluidInfoEnricherEvent(FluidInfoEnricherEvent event) {
         if (Config.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
             final ItemStack stack = GTUtility.getFluidDisplayStack(
-                event.context.getFluid()
+                event.target.getFluid()
                     .getFluid());
 
             if (stack == null) {
