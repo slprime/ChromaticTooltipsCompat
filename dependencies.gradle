@@ -1,7 +1,7 @@
 dependencies {
-    devOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.8.52-GTNH:dev")
-    implementation(files("libs/chromatictooltips-1.0.7.jar"))
+    implementation("com.github.slprime:ChromaticTooltips:1.0.7:dev")
 
+    devOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.8.52-GTNH:dev")
     devOnlyNonPublishable("com.github.GTNewHorizons:AppleCore:3.3.9:dev")
     devOnlyNonPublishable("com.github.GTNewHorizons:BetterQuesting:3.8.19-GTNH:dev")
     devOnlyNonPublishable("com.github.GTNewHorizons:Binnie:2.6.7:dev")
