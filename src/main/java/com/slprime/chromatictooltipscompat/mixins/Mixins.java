@@ -73,6 +73,11 @@ public enum Mixins implements IMixins {
         .setApplyIf(() -> Config.botaniaEnabled)
         .setPhase(Phase.LATE)),
 
+    BAUBLES_EXPANDED(new MixinBuilder("Baubles Expanded").addRequiredMod(TargetedMod.BAUBLES_EXPANDED)
+        .addClientMixins("baublesExpanded.GuiBaublesButtonMixin")
+        .setApplyIf(() -> Config.baublesExpandedEnabled)
+        .setPhase(Phase.LATE)),
+
     RAILCRAFT(new MixinBuilder("Railcraft").addRequiredMod(TargetedMod.RAILCRAFT)
         .addClientMixins("railcraft.GuiContainerRailcraftMixin", "railcraft.ToolTipMixin")
         .setApplyIf(() -> Config.railcraftEnabled)

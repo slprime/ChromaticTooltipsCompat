@@ -25,7 +25,8 @@ public enum TargetedMod implements ITargetMod {
     NEI_CUSTOM_DIAGRAM(null, "neicustomdiagram"),
     GTNH_LIB(null, "gtnhlib"),
     GREGTECH( "gregtech.asm.GTCorePlugin", "gregtech"),
-    AE2FC(null, "ae2fc");
+    AE2FC(null, "ae2fc"),
+    BAUBLES_EXPANDED(null, "Baubles|Expanded");
     // spotless:on
 
     private final TargetModBuilder builder;

@@ -304,6 +304,10 @@ public class CompatHander {
             TOOLTIPS.add(new TooltipLineModifier(ctrl2, TooltipLines.CTRL_MODIFIER));
         }
 
+        if (Config.baublesExpandedEnabled) {
+            TOOLTIPS.add(new TooltipLineModifier(translateToLocal("tooltip.shiftprompt"), TooltipLines.SHIFT_MODIFIER));
+        }
+
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

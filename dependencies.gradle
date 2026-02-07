@@ -19,5 +19,6 @@ dependencies {
     devOnlyNonPublishable('com.github.GTNewHorizons:AdventureBackpack2:1.4.9-GTNH:dev')
     devOnlyNonPublishable("com.github.GTNewHorizons:nei-custom-diagram:1.8.8:dev") { transitive = false }
     devOnlyNonPublishable("com.github.GTNewHorizons:Draconic-Evolution:1.5.8-GTNH:dev")
+    devOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.6-GTNH:dev")
 
 }

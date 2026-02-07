@@ -21,6 +21,7 @@ public class Config {
     public static boolean binnieCoreEnabled = true;
     public static boolean bloodArsenalEnabled = true;
     public static boolean botaniaEnabled = true;
+    public static boolean baublesExpandedEnabled = true;
     public static boolean codeChickenCoreEnabled = true;
     public static boolean computronicsEnabled = true;
     public static boolean draconicEvolutionEnabled = true;
@@ -142,6 +143,12 @@ public class Config {
             Configuration.CATEGORY_GENERAL,
             botaniaEnabled,
             "Enable compatibility with Botania");
+
+        baublesExpandedEnabled = configuration.getBoolean(
+            "baublesExpandedEnabled",
+            Configuration.CATEGORY_GENERAL,
+            baublesExpandedEnabled,
+            "Enable compatibility with Baubles Expanded");
 
         codeChickenCoreEnabled = configuration.getBoolean(
             "codeChickenCoreEnabled",
