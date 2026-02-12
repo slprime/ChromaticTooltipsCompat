@@ -28,7 +28,7 @@ import com.slprime.chromatictooltips.event.TextLinesConverterEvent;
 import com.slprime.chromatictooltips.event.TitleEnricherEvent;
 import com.slprime.chromatictooltips.util.TooltipUtils;
 import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
-import com.slprime.chromatictooltipscompat.Config;
+import com.slprime.chromatictooltipscompat.CompatConfig;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.lib.gui.GuiDraw.ITooltipLineHandler;
@@ -62,7 +62,7 @@ public class NEIHandler {
             ItemStack itemStack = context.getItem();
 
             if (itemStack == null && context.getTarget()
-                .isFluid() && Config.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
+                .isFluid() && CompatConfig.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
                 itemStack = GTUtility.getFluidDisplayStack(context.getFluid(), true);
             }
 
@@ -146,7 +146,7 @@ public class NEIHandler {
     protected ItemStack getItemStackFromContext(TooltipTarget target) {
         ItemStack stack = target.getItem();
 
-        if (stack == null && target.isFluid() && Config.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
+        if (stack == null && target.isFluid() && CompatConfig.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
             stack = GTUtility.getFluidDisplayStack(target.getFluid(), true);
         }
 
@@ -196,7 +196,7 @@ public class NEIHandler {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onFluidInfoEnricherEvent(FluidInfoEnricherEvent event) {
-        if (Config.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
+        if (CompatConfig.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
             final ItemStack stack = GTUtility.getFluidDisplayStack(
                 event.target.getFluid()
                     .getFluid());

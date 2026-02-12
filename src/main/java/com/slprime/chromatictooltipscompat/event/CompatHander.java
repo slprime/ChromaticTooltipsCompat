@@ -18,7 +18,7 @@ import org.lwjgl.input.Keyboard;
 
 import com.slprime.chromatictooltips.api.TooltipLines;
 import com.slprime.chromatictooltips.util.TooltipUtils;
-import com.slprime.chromatictooltipscompat.Config;
+import com.slprime.chromatictooltipscompat.CompatConfig;
 
 import codechicken.nei.util.ItemStackKey;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -52,7 +52,7 @@ public class CompatHander {
     public static void reload() {
         TOOLTIPS.clear();
 
-        if (Config.gregtechEnabled) {
+        if (CompatConfig.gregtechEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(
                     translateToLocal("mbdesc.signAndFinalize.todisplay"),
@@ -63,14 +63,14 @@ public class CompatHander {
                     TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.appliedEnergisticsEnabled) {
+        if (CompatConfig.appliedEnergisticsEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(
                     translateToLocal("gui.appliedenergistics2.HoldShift"),
                     TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.tinkersConstructEnabled) {
+        if (CompatConfig.tinkersConstructEnabled) {
             TOOLTIPS.add(new TooltipLineModifier(translateToLocal("tooltip.shiftprompt"), TooltipLines.SHIFT_MODIFIER));
             TOOLTIPS.add(
                 new TooltipLineModifier(
@@ -78,124 +78,124 @@ public class CompatHander {
                     TooltipLines.CTRL_MODIFIER));
         }
 
-        if (Config.ae2fcEnabled) {
+        if (CompatConfig.ae2fcEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(translateToLocal("ae2fc.tooltip.ctrl_for_more"), TooltipLines.CTRL_MODIFIER));
             TOOLTIPS.add(
                 new TooltipLineModifier(translateToLocal("ae2fc.tooltip.shift_for_more"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.ae2wctEnabled) {
+        if (CompatConfig.ae2wctEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(
                     translateToLocal("gui.tooltips.ae2wct.PressShift"),
                     TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.forestryEnabled) {
+        if (CompatConfig.forestryEnabled) {
             TOOLTIPS.add(new TooltipLineModifier(translateToLocal("for.gui.tooltip.tmi"), TooltipLines.CTRL_MODIFIER));
             TOOLTIPS.add(new TooltipLineModifier(translateToLocal("for.gui.tooltip.tml"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.backpackEnabled) {
+        if (CompatConfig.backpackEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(translateToLocal("tooltip.more_information"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.binnieCoreEnabled) {
+        if (CompatConfig.binnieCoreEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(translateToLocal("botany.item.tooltip.holdMore"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.logisticsPipesEnabled) {
+        if (CompatConfig.logisticsPipesEnabled) {
             TOOLTIPS.add(new TooltipLineModifier(translateToLocal("misc.holdshift"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.logisticsPipesEnabled) {
+        if (CompatConfig.thaumicenergisticsEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(
                     translateToLocal("thaumicenergistics.tooltip.itemstack.details"),
                     TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.supersolarpanelEnabled) {
+        if (CompatConfig.supersolarpanelEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(translateToLocal("supsolpans.all.PressShift"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.gendustryEnabled) {
+        if (CompatConfig.gendustryEnabled) {
             TOOLTIPS
                 .add(new TooltipLineModifier(translateToLocal("gendustry.label.shift"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.emtEnabled) {
+        if (CompatConfig.emtEnabled) {
             TOOLTIPS.add(new TooltipLineModifier(translateToLocal("emt.PressShift"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.AWWayofTimeEnabled) {
+        if (CompatConfig.AWWayofTimeEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(
                     translateToLocal("tooltip.ritualdiviner.moreinfo"),
                     TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.storageDrawersEnabled) {
+        if (CompatConfig.storageDrawersEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(
                     translateToLocal("storageDrawers.drawers.sealed.descriptionShift"),
                     TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.modularUIEnabled) {
+        if (CompatConfig.modularUIEnabled) {
             TOOLTIPS
                 .add(new TooltipLineModifier(translateToLocal("modularui.tooltip.shift"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.modularUI2Enabled) {
+        if (CompatConfig.modularUI2Enabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(translateToLocal("modularui2.tooltip.shift"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.sfmEnabled) {
+        if (CompatConfig.sfmEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(translateToLocal("gui.sfm.TooltipExtraInfo"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.enderCoreEnabled) {
+        if (CompatConfig.enderCoreEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(
                     translateToLocal("endercore.tooltip.showDetails"),
                     TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.bloodArsenalEnabled) {
+        if (CompatConfig.bloodArsenalEnabled) {
             TOOLTIPS.add(new TooltipLineModifier(translateToLocal("tooltip.shiftinfo"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.avaritiaEnabled) {
+        if (CompatConfig.avaritiaEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(translateToLocal("tooltip.matter_cluster.desc2"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.baublesEnabled) {
+        if (CompatConfig.baublesEnabled) {
             TOOLTIPS.add(new TooltipLineModifier(translateToLocal("tooltip.shiftprompt"), TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.holoinventoryEnabled) {
+        if (CompatConfig.holoinventoryEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(
                     translateToLocal("hologlasses.tooltip.hold_shift"),
                     TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.akashictomeEnabled) {
+        if (CompatConfig.akashictomeEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(
                     translateToLocal("akashictome.misc.shiftForInfo"),
                     TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.botaniaEnabled) {
+        if (CompatConfig.botaniaEnabled) {
             final String shiftinfo = EnumChatFormatting.getTextWithoutFormattingCodes(
                 StatCollector.translateToLocal("botaniamisc.shiftinfo")
                     .replaceAll("&", "\u00a7"));
@@ -203,13 +203,13 @@ public class CompatHander {
             TOOLTIPS.add(new TooltipLineModifier(shiftinfo, TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.spiceoflifeEnabled) {
+        if (CompatConfig.spiceoflifeEnabled) {
             final String moreinfo = translateToLocalFormatted("spiceoflife.tooltip.hold.key.for.details", "Shift");
 
             TOOLTIPS.add(new TooltipLineModifier(moreinfo, TooltipLines.SHIFT_MODIFIER));
         }
 
-        if (Config.adventurebackpackEnabled) {
+        if (CompatConfig.adventurebackpackEnabled) {
             TOOLTIPS.add(
                 new TooltipLineModifier(
                     translateToLocal("adventurebackpack:tooltips.hold.shift"),
@@ -222,7 +222,7 @@ public class CompatHander {
 
         }
 
-        if (Config.draconicEvolutionEnabled) {
+        if (CompatConfig.draconicEvolutionEnabled) {
             final String ctrlinfo = translateToLocal("info.de.hold.txt") + " "
                 + translateToLocal("info.de.ctrl.txt")
                 + " "
@@ -236,7 +236,7 @@ public class CompatHander {
             TOOLTIPS.add(new TooltipLineModifier(ctrlinfo, TooltipLines.CTRL_MODIFIER));
         }
 
-        if (Config.galacticraftcoreEnabled) {
+        if (CompatConfig.galacticraftcoreEnabled) {
             final String shift1 = translateToLocalFormatted(
                 "itemDesc.shift.name",
                 GameSettings.getKeyDisplayString(Keyboard.KEY_LSHIFT));
@@ -270,7 +270,7 @@ public class CompatHander {
             TOOLTIPS.add(new TooltipLineModifier(ctrl2, TooltipLines.CTRL_MODIFIER));
         }
 
-        if (Config.computronicsEnabled) {
+        if (CompatConfig.computronicsEnabled) {
             final String shift1 = translateToLocalFormatted(
                 "oc:tooltip.TooLong",
                 GameSettings.getKeyDisplayString(Keyboard.KEY_LSHIFT));
@@ -304,7 +304,7 @@ public class CompatHander {
             TOOLTIPS.add(new TooltipLineModifier(ctrl2, TooltipLines.CTRL_MODIFIER));
         }
 
-        if (Config.baublesExpandedEnabled) {
+        if (CompatConfig.baublesExpandedEnabled) {
             TOOLTIPS.add(new TooltipLineModifier(translateToLocal("tooltip.shiftprompt"), TooltipLines.SHIFT_MODIFIER));
         }
 

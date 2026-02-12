@@ -7,7 +7,7 @@ import net.minecraftforge.fluids.FluidStack;
 import com.slprime.chromatictooltips.api.ITargetSanitizer;
 import com.slprime.chromatictooltips.api.TooltipTarget;
 import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
-import com.slprime.chromatictooltipscompat.Config;
+import com.slprime.chromatictooltipscompat.CompatConfig;
 
 import codechicken.nei.recipe.StackInfo;
 import cpw.mods.fml.common.Loader;
@@ -23,7 +23,7 @@ public class NEITargetSanitizer implements ITargetSanitizer {
             final ItemStack itemStack = StackInfo
                 .normalizeRecipeQueryStack(StackInfo.loadFromNBT(StackInfo.itemStackToNBT(target.getItem())));
 
-            if (itemStack != null && Config.gregtechEnabled
+            if (itemStack != null && CompatConfig.gregtechEnabled
                 && Loader.isModLoaded(ModIds.GT5)
                 && itemStack.getItem() instanceof ItemFluidDisplay) {
                 final FluidStack fluidStack = GTUtility.getFluidFromDisplayStack(itemStack);

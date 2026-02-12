@@ -20,7 +20,7 @@ import com.enderio.core.client.gui.widget.GuiToolTip;
 import com.slprime.chromatictooltips.TooltipHandler;
 import com.slprime.chromatictooltips.util.TooltipUtils;
 import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
-import com.slprime.chromatictooltipscompat.Config;
+import com.slprime.chromatictooltipscompat.CompatConfig;
 import com.slprime.chromatictooltipscompat.mixins.late.enderio.GuiMachineBaseInvoker;
 
 import codechicken.nei.guihook.GuiContainerManager;
@@ -55,7 +55,7 @@ public class GuiContainerManagerMixin {
             }
         }
 
-        if (Config.enderCoreEnabled && Loader.isModLoaded(ModIds.ENDERCORE)) {
+        if (CompatConfig.enderCoreEnabled && Loader.isModLoaded(ModIds.ENDERCORE)) {
             // Add Ender IO tooltips
             this.onEnderIoTooltips(tooltip);
         }

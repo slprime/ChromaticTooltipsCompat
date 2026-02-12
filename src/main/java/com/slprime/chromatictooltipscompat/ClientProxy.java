@@ -30,32 +30,32 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
 
-        if (Config.notEnoughItemsEnabled && Loader.isModLoaded(ModIds.NEI)) {
+        if (CompatConfig.notEnoughItemsEnabled && Loader.isModLoaded(ModIds.NEI)) {
             NEIHandler.registerHandler();
             TooltipRegistry.addTargetSanitizer(new NEITargetSanitizer());
         }
 
-        if (Config.appleCoreEnabled && Loader.isModLoaded(ModIds.APPLECORE)) {
+        if (CompatConfig.appleCoreEnabled && Loader.isModLoaded(ModIds.APPLECORE)) {
             AppleCoreHandler.registerHandler();
         }
 
-        if (Config.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
+        if (CompatConfig.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
             ItemStackFilterParser.registerCustomFilter("tier", new GTTierFilterParser());
         }
 
-        if (Config.enderCoreEnabled && Loader.isModLoaded(ModIds.ENDERCORE)) {
+        if (CompatConfig.enderCoreEnabled && Loader.isModLoaded(ModIds.ENDERCORE)) {
             EnderCoreHandler.registerHandler();
         }
 
-        if (Config.tinkersConstructEnabled && Loader.isModLoaded(ModIds.TCONSTRUCT)) {
+        if (CompatConfig.tinkersConstructEnabled && Loader.isModLoaded(ModIds.TCONSTRUCT)) {
             TConstructHandler.registerHandler();
         }
 
-        if (Config.draconicEvolutionEnabled && Loader.isModLoaded(ModIds.DRACONIC_EVOLUTION)) {
+        if (CompatConfig.draconicEvolutionEnabled && Loader.isModLoaded(ModIds.DRACONIC_EVOLUTION)) {
             DraconicEvolutionHandler.registerHandler();
         }
 
-        if (Config.appliedEnergisticsEnabled && Config.appliedEnergisticsAmountEnabled
+        if (CompatConfig.appliedEnergisticsEnabled && CompatConfig.appliedEnergisticsAmountEnabled
             && Loader.isModLoaded(ModIds.APPLIED_ENERGISTICS2)) {
             AppliedEnergisticsHandler.registerHandler();
         }

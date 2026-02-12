@@ -23,6 +23,10 @@ public abstract class GuiBaublesButtonMixin extends GuiButton {
         super(id, x, y, w, h, text);
     }
 
+    /**
+     * @author SLPrime
+     * @reason Change default tooltip to chromatictooltip
+     */
     @Overwrite
     public void drawButton(Minecraft mc, int xx, int yy) {
 
