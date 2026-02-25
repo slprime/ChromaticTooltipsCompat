@@ -26,6 +26,7 @@ public enum TargetedMod implements ITargetMod {
     GTNH_LIB(null, "gtnhlib"),
     GREGTECH( "gregtech.asm.GTCorePlugin", "gregtech"),
     AE2FC(null, "ae2fc"),
+    LOGISTICS_PIPES(null, "LogisticsPipes"),
     BAUBLES_EXPANDED(null, "Baubles|Expanded");
     // spotless:on
 

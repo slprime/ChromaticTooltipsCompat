@@ -132,6 +132,11 @@ public enum Mixins implements IMixins {
     AE2FC(new MixinBuilder("AE2 Fluid Crafting").addRequiredMod(TargetedMod.AE2FC)
         .addClientMixins("ae2fc.BlockCertusQuartzTankMixin")
         .setApplyIf(() -> CompatConfig.ae2fcEnabled)
+        .setPhase(Phase.LATE)),
+
+    LOGISTICS_PIPES(new MixinBuilder("Logistics Pipes").addRequiredMod(TargetedMod.LOGISTICS_PIPES)
+        .addClientMixins("logisticspipes.GuiGraphicsMixin")
+        .setApplyIf(() -> CompatConfig.logisticsPipesEnabled)
         .setPhase(Phase.LATE));
 
     private final MixinBuilder builder;
