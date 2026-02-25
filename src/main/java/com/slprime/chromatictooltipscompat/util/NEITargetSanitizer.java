@@ -27,10 +27,10 @@ public class NEITargetSanitizer implements ITargetSanitizer {
                 && Loader.isModLoaded(ModIds.GT5)
                 && itemStack.getItem() instanceof ItemFluidDisplay) {
                 final FluidStack fluidStack = GTUtility.getFluidFromDisplayStack(itemStack);
-                final NBTTagCompound aNBT = itemStack.getTagCompound();
-                final long stackAmount = aNBT != null ? aNBT.getLong("mFluidDisplayAmount") : fluidStack.amount;
 
                 if (fluidStack != null) {
+                    final NBTTagCompound aNBT = itemStack.getTagCompound();
+                    final long stackAmount = aNBT != null ? aNBT.getLong("mFluidDisplayAmount") : fluidStack.amount;
                     return TooltipTarget.ofFluid(fluidStack, stackAmount);
                 }
             }
