@@ -71,6 +71,10 @@ public class CompatConfig {
     @Config.DefaultBoolean(true)
     public static boolean botaniaEnabled;
 
+    @Config.Comment("Enable compatibility with BuildCraft")
+    @Config.DefaultBoolean(true)
+    public static boolean buildcraftEnabled;
+
     @Config.Comment("Enable compatibility with Baubles Expanded")
     @Config.DefaultBoolean(true)
     public static boolean baublesExpandedEnabled;

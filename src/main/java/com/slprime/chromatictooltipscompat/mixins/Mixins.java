@@ -152,6 +152,11 @@ public enum Mixins implements IMixins {
     SCIENCE_NOT_LEISURE(new MixinBuilder("GT Not Leisure").addRequiredMod(TargetedMod.SCIENCE_NOT_LEISURE)
         .addClientMixins("sciencenotleisure.AnimatedTooltipHandlerMixin")
         .setApplyIf(() -> CompatConfig.scienceNotLeisureEnabled)
+        .setPhase(Phase.LATE)),
+
+    BUILDCRAFT(new MixinBuilder("BuildCraft").addRequiredMod(TargetedMod.BUILDCRAFT)
+        .addClientMixins("buildcraft.GuiBuildCraftMixin", "buildcraft.ToolTipMixin", "buildcraft.LedgerManagerMixin")
+        .setApplyIf(() -> CompatConfig.buildcraftEnabled)
         .setPhase(Phase.LATE));
 
     private final MixinBuilder builder;

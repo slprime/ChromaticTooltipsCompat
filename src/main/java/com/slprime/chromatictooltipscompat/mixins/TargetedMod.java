@@ -8,6 +8,7 @@ import com.gtnewhorizon.gtnhmixins.builders.TargetModBuilder;
 public enum TargetedMod implements ITargetMod {
 
     // spotless:off
+    BUILDCRAFT(null, "BuildCraft|Core"),
     CODECHICKEN_LIB(null, "CodeChickenCore"),
     CODECHICKEN_NEI(null, "NotEnoughItems"),
     BETTER_QUESTING(null, "betterquesting"),
