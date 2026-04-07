@@ -143,6 +143,10 @@ public class CompatConfig {
     @Config.DefaultBoolean(true)
     public static boolean jecalculationEnabled;
 
+    @Config.Comment("Enable compatibility with JourneyMap")
+    @Config.DefaultBoolean(true)
+    public static boolean journeymapEnabled;
+
     @Config.Comment("Enable compatibility with Modular UI")
     @Config.DefaultBoolean(true)
     public static boolean modularUIEnabled;

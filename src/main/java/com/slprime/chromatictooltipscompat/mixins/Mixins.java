@@ -154,6 +154,11 @@ public enum Mixins implements IMixins {
         .setApplyIf(() -> CompatConfig.jecalculationEnabled)
         .setPhase(Phase.LATE)),
 
+    JOURNEYMAP(new MixinBuilder("JourneyMap").addRequiredMod(TargetedMod.JOURNEYMAP)
+        .addClientMixins("journeymap.JmUIMixin")
+        .setApplyIf(() -> CompatConfig.journeymapEnabled)
+        .setPhase(Phase.LATE)),
+
     SCIENCE_NOT_LEISURE(new MixinBuilder("GT Not Leisure").addRequiredMod(TargetedMod.SCIENCE_NOT_LEISURE)
         .addClientMixins("sciencenotleisure.AnimatedTooltipHandlerMixin")
         .setApplyIf(() -> CompatConfig.scienceNotLeisureEnabled)
