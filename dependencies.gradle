@@ -22,6 +22,7 @@ dependencies {
     devOnlyNonPublishable("com.github.GTNewHorizons:Draconic-Evolution:1.5.18-GTNH:dev")
     devOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.6-GTNH:dev")
     devOnlyNonPublishable("com.github.GTNewHorizons:LogisticsPipes:1.5.12-GTNH:dev")
+    devOnlyNonPublishable("com.github.GTNewHorizons:MalisisDoors:1.19.4-GTNH:dev")
     devOnlyNonPublishable("com.github.GTNewHorizons:JustEnoughCalculation:1.7.10-4.9:dev")
     compileOnly("com.github.ABKQPO:GT-Not-Leisure:0.2.4:dev") { transitive = false }
 }

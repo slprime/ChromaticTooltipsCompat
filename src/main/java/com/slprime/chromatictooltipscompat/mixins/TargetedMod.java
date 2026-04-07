@@ -28,6 +28,7 @@ public enum TargetedMod implements ITargetMod {
     GREGTECH( "gregtech.asm.GTCorePlugin", "gregtech"),
     AE2FC(null, "ae2fc"),
     LOGISTICS_PIPES(null, "LogisticsPipes"),
+    MALISIS_DOORS(null, "malisisdoors"),
     BAUBLES_EXPANDED(null, "Baubles|Expanded"),
     APPLECORE(null, "AppleCore"),
     JECALCULATION(null, "jecalculation"),

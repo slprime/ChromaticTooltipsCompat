@@ -131,6 +131,10 @@ public class CompatConfig {
     @Config.DefaultBoolean(true)
     public static boolean logisticsPipesEnabled;
 
+    @Config.Comment("Enable compatibility with Malisis Doors")
+    @Config.DefaultBoolean(true)
+    public static boolean malisisDoorsEnabled;
+
     @Config.Comment("Enable compatibility with Just Enough Calculation")
     @Config.DefaultBoolean(true)
     public static boolean jecalculationEnabled;

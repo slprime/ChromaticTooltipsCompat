@@ -139,6 +139,11 @@ public enum Mixins implements IMixins {
         .setApplyIf(() -> CompatConfig.logisticsPipesEnabled)
         .setPhase(Phase.LATE)),
 
+    MALISIS_DOORS(new MixinBuilder("Malisis Doors").addRequiredMod(TargetedMod.MALISIS_DOORS)
+        .addClientMixins("malisisdoors.GuiRendererMixin", "malisisdoors.UITooltipAccessor")
+        .setApplyIf(() -> CompatConfig.malisisDoorsEnabled)
+        .setPhase(Phase.LATE)),
+
     APPLECORE(new MixinBuilder("AppleCore").addRequiredMod(TargetedMod.APPLECORE)
         .addClientMixins("applecore.TooltipOverlayHandlerMixin")
         .setApplyIf(() -> CompatConfig.appleCoreFoodStatsDisabled)
