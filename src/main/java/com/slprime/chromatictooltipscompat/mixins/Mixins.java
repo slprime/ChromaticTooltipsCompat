@@ -162,7 +162,13 @@ public enum Mixins implements IMixins {
     BUILDCRAFT(new MixinBuilder("BuildCraft").addRequiredMod(TargetedMod.BUILDCRAFT)
         .addClientMixins("buildcraft.GuiBuildCraftMixin", "buildcraft.ToolTipMixin", "buildcraft.LedgerManagerMixin")
         .setApplyIf(() -> CompatConfig.buildcraftEnabled)
-        .setPhase(Phase.LATE));
+        .setPhase(Phase.LATE)),
+
+    HARDCORE_ENDER_EXPANSION(
+        new MixinBuilder("Hardcore Ender Expansion").addRequiredMod(TargetedMod.HARDCORE_ENDER_EXPANSION)
+            .addClientMixins("hardcoreenderexpansion.GuiItemRenderHelperMixin")
+            .setApplyIf(() -> CompatConfig.hardcoreEnderExpansionEnabled)
+            .setPhase(Phase.LATE));
 
     private final MixinBuilder builder;
 

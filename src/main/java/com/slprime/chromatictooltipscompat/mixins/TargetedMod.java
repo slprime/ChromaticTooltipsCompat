@@ -32,7 +32,8 @@ public enum TargetedMod implements ITargetMod {
     BAUBLES_EXPANDED(null, "Baubles|Expanded"),
     APPLECORE(null, "AppleCore"),
     JECALCULATION(null, "jecalculation"),
-    SCIENCE_NOT_LEISURE(null, "sciencenotleisure");
+    SCIENCE_NOT_LEISURE(null, "sciencenotleisure"),
+    HARDCORE_ENDER_EXPANSION(null, "HardcoreEnderExpansion");
     // spotless:on
 
     private final TargetModBuilder builder;

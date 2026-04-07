@@ -119,6 +119,10 @@ public class CompatConfig {
     @Config.DefaultBoolean(true)
     public static boolean gtnhlibEnabled;
 
+    @Config.Comment("Enable compatibility with Hardcore Ender Expansion")
+    @Config.DefaultBoolean(true)
+    public static boolean hardcoreEnderExpansionEnabled;
+
     @Config.Comment("Enable compatibility with HoloInventory")
     @Config.DefaultBoolean(true)
     public static boolean holoinventoryEnabled;
