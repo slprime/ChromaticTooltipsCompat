@@ -164,6 +164,11 @@ public enum Mixins implements IMixins {
         .setApplyIf(() -> CompatConfig.journeymapEnabled)
         .setPhase(Phase.LATE)),
 
+    THAUMCRAFT(new MixinBuilder("Thaumcraft").addRequiredMod(TargetedMod.THAUMCRAFT)
+        .addClientMixins("thaumcraft.UtilsFXMixin", "thaumcraft.GuiResearchBrowserMixin")
+        .setApplyIf(() -> CompatConfig.thaumcraftEnabled)
+        .setPhase(Phase.LATE)),
+
     STEVES_CARTS_2(new MixinBuilder("Steve's Carts 2").addRequiredMod(TargetedMod.STEVES_CARTS_2)
         .addClientMixins("stevescarts2.GuiBaseMixin")
         .setApplyIf(() -> CompatConfig.stevesCarts2Enabled)

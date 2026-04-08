@@ -34,6 +34,7 @@ public enum TargetedMod implements ITargetMod {
     APPLECORE(null, "AppleCore"),
     JECALCULATION(null, "jecalculation"),
     JOURNEYMAP(null, "journeymap"),
+    THAUMCRAFT(null, "Thaumcraft"),
     STEVES_CARTS_2(null, "StevesCarts"),
     SCIENCE_NOT_LEISURE(null, "sciencenotleisure"),
     HARDCORE_ENDER_EXPANSION(null, "HardcoreEnderExpansion");

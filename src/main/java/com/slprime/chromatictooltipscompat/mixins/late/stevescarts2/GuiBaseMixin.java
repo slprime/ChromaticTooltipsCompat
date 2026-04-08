@@ -10,7 +10,7 @@ import com.slprime.chromatictooltips.TooltipHandler;
 import vswe.stevescarts.Interfaces.GuiBase;
 
 @Mixin(GuiBase.class)
-public abstract class GuiBaseMixin {
+public class GuiBaseMixin {
 
     /**
      * @author SLPrime

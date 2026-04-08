@@ -12,7 +12,7 @@ import com.slprime.chromatictooltips.TooltipHandler;
 import journeymap.client.ui.component.JmUI;
 
 @Mixin(JmUI.class)
-public abstract class JmUIMixin {
+public class JmUIMixin {
 
     /**
      * @author SLPrime

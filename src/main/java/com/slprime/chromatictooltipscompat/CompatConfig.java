@@ -195,6 +195,10 @@ public class CompatConfig {
     @Config.DefaultBoolean(true)
     public static boolean thaumicenergisticsEnabled;
 
+    @Config.Comment("Enable compatibility with Thaumcraft")
+    @Config.DefaultBoolean(true)
+    public static boolean thaumcraftEnabled;
+
     @Config.Comment("Enable compatibility with Tinkers' Construct")
     @Config.DefaultBoolean(true)
     public static boolean tinkersConstructEnabled;

@@ -26,7 +26,10 @@ dependencies {
     devOnlyNonPublishable("com.github.GTNewHorizons:LogisticsPipes:1.5.12-GTNH:dev")
     devOnlyNonPublishable("com.github.GTNewHorizons:MalisisDoors:1.19.4-GTNH:dev")
     devOnlyNonPublishable("com.github.GTNewHorizons:JustEnoughCalculation:1.7.10-4.9:dev")
-    devOnlyNonPublishable(rfg.deobf('maven.modrinth:journeymap:5.2.6')) { transitive = false }
     devOnlyNonPublishable("com.github.GTNewHorizons:SC2:2.3.10:dev") { transitive = false }
+
+
+    devOnlyNonPublishable(rfg.deobf('maven.modrinth:journeymap:5.2.6')) { transitive = false }
+    devOnlyNonPublishable("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev") { transitive = false }
     compileOnly("com.github.ABKQPO:GT-Not-Leisure:0.2.4:dev") { transitive = false }
 }
