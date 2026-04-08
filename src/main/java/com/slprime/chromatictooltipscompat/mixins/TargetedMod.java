@@ -15,6 +15,7 @@ public enum TargetedMod implements ITargetMod {
     BETTER_QUESTING(null, "betterquesting"),
     ENDER_IO_CORE(null, "endercore"),
     FORESTRY(null, "Forestry"),
+    GALACTICRAFT_CORE(null, "GalacticraftCore"),
     MODULAR_UI(null, "modularui"),
     MODULAR_UI2(null, "modularui2"),
     BOTANIA(null, "Botania"),

@@ -49,6 +49,11 @@ public enum Mixins implements IMixins {
         .setApplyIf(() -> CompatConfig.forestryEnabled)
         .setPhase(Phase.LATE)),
 
+    GALACTICRAFT_CORE(new MixinBuilder("Galacticraft Core").addRequiredMod(TargetedMod.GALACTICRAFT_CORE)
+        .addClientMixins("galacticraft.GuiElementInfoRegionMixin")
+        .setApplyIf(() -> CompatConfig.galacticraftcoreEnabled)
+        .setPhase(Phase.LATE)),
+
     MODULAR_UI(new MixinBuilder("Modular UI").addRequiredMod(TargetedMod.MODULAR_UI)
         .addClientMixins("modularui.ModularGuiMixin", "modularui.GuiHelperMixin")
         .setApplyIf(() -> CompatConfig.modularUIEnabled)
