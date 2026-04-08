@@ -179,6 +179,11 @@ public enum Mixins implements IMixins {
         .setApplyIf(() -> CompatConfig.scienceNotLeisureEnabled)
         .setPhase(Phase.LATE)),
 
+    INDUSTRIAL_CRAFT_2(new MixinBuilder("IndustrialCraft 2").addRequiredMod(TargetedMod.INDUSTRIAL_CRAFT_2)
+        .addClientMixins("industrialcraft2.GuiTooltipHelperMixin")
+        .setApplyIf(() -> CompatConfig.industrialCraft2Enabled)
+        .setPhase(Phase.LATE)),
+
     BUILDCRAFT(new MixinBuilder("BuildCraft").addRequiredMod(TargetedMod.BUILDCRAFT)
         .addClientMixins("buildcraft.GuiBuildCraftMixin", "buildcraft.ToolTipMixin", "buildcraft.LedgerManagerMixin")
         .setApplyIf(() -> CompatConfig.buildcraftEnabled)

@@ -119,6 +119,10 @@ public class CompatConfig {
     @Config.DefaultBoolean(true)
     public static boolean gtnhlibEnabled;
 
+    @Config.Comment("Enable compatibility with IndustrialCraft 2")
+    @Config.DefaultBoolean(true)
+    public static boolean industrialCraft2Enabled;
+
     @Config.Comment("Enable compatibility with Hardcore Ender Expansion")
     @Config.DefaultBoolean(true)
     public static boolean hardcoreEnderExpansionEnabled;
