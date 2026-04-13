@@ -20,20 +20,25 @@ import com.slprime.chromatictooltips.api.TooltipContext;
 import com.slprime.chromatictooltips.api.TooltipLines;
 import com.slprime.chromatictooltips.api.TooltipModifier;
 import com.slprime.chromatictooltips.api.TooltipTarget;
+import com.slprime.chromatictooltips.component.SectionComponent;
 import com.slprime.chromatictooltips.event.ContextInfoEnricherEvent;
 import com.slprime.chromatictooltips.event.FluidInfoEnricherEvent;
 import com.slprime.chromatictooltips.event.HotkeyEnricherEvent;
 import com.slprime.chromatictooltips.event.TextLinesConverterEvent;
 import com.slprime.chromatictooltips.event.TitleEnricherEvent;
+import com.slprime.chromatictooltips.event.TooltipEnricherEvent;
 import com.slprime.chromatictooltips.util.TooltipUtils;
 import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
 import com.slprime.chromatictooltipscompat.CompatConfig;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.lib.gui.GuiDraw.ITooltipLineHandler;
+import codechicken.nei.ItemsTooltipLineHandler;
 import codechicken.nei.NEIClientUtils;
 import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.guihook.IContainerTooltipHandler;
+import codechicken.nei.recipe.RecipeTooltipLineHandler;
+import codechicken.nei.recipe.chain.RecipeChainTooltipLineHandler;
 import codechicken.nei.util.ItemUntranslator;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.EventPriority;
@@ -147,6 +152,21 @@ public class NEIHandler {
         return stack;
     }
 
+    protected List<String> getContextInfoTooltip(GuiContainer gui, ItemStack stack, int mouseX, int mouseY) {
+        List<String> tooltip = new ArrayList<>();
+        tooltip.add("Temporary Name"); // temporary name added for information gathering
+
+        for (IContainerTooltipHandler handler : getInstanceTooltipHandlers()) {
+            tooltip = handler.handleItemTooltip(gui, stack, mouseX, mouseY, tooltip);
+        }
+
+        if (!tooltip.isEmpty()) {
+            tooltip.remove(0); // remove temporary name
+        }
+
+        return tooltip;
+    }
+
     @SubscribeEvent
     public void onTitleEnricherEvent(TitleEnricherEvent event) {
         final ItemStack stack = getItemStackFromContext(event.target);
@@ -174,18 +194,7 @@ public class NEIHandler {
         final GuiContainer gui = NEIClientUtils.getGuiContainer();
         final Point mouse = TooltipUtils.getMousePosition();
         final ItemStack stack = getItemStackFromContext(event.target);
-        List<String> tooltip = new ArrayList<>();
-        tooltip.add("Temporary Name"); // temporary name added for information gathering
-
-        for (IContainerTooltipHandler handler : getInstanceTooltipHandlers()) {
-            tooltip = handler.handleItemTooltip(gui, stack, mouse.x, mouse.y, tooltip);
-        }
-
-        if (!tooltip.isEmpty()) {
-            tooltip.remove(0); // remove temporary name
-        }
-
-        event.tooltip.addAll(tooltip);
+        event.tooltip.addAll(getContextInfoTooltip(gui, stack, mouse.x, mouse.y));
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -238,6 +247,42 @@ public class NEIHandler {
                 if (lineHandler != null) {
                     event.list.set(i, new TooltipComponentCompat(lineHandler));
                 }
+            }
+        }
+
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public void onTooltipEnricherEvent(TooltipEnricherEvent event) {
+
+        if (event.context.getActiveModifier() != TooltipModifier.SHIFT) {
+            return;
+        }
+
+        final GuiContainer gui = NEIClientUtils.getGuiContainer();
+        final Point mouse = TooltipUtils.getMousePosition();
+        final ItemStack stack = getItemStackFromContext(event.context.getTarget());
+        final List<String> tooltip = getContextInfoTooltip(gui, stack, mouse.x, mouse.y);
+        final List<ITooltipComponent> additionalComponents = new ArrayList<>();
+
+        for (String line : tooltip) {
+            final ITooltipLineHandler lineHandler = GuiDraw
+                .getTipLine(EnumChatFormatting.getTextWithoutFormattingCodes(line));
+            if (lineHandler instanceof ItemsTooltipLineHandler || lineHandler instanceof RecipeTooltipLineHandler
+                || lineHandler instanceof RecipeChainTooltipLineHandler) {
+                additionalComponents.add(new TooltipComponentCompat(lineHandler));
+            }
+        }
+
+        if (additionalComponents.isEmpty()) {
+            return;
+        }
+
+        for (SectionComponent section : event.context.getSections()) {
+            if (section.getSectionId()
+                .equals("body")) {
+                section.addAllComponents(additionalComponents);
+                break;
             }
         }
 
