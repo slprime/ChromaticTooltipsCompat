@@ -1,25 +1,20 @@
 package com.slprime.chromatictooltipscompat.event;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 import org.lwjgl.input.Keyboard;
 
 import com.slprime.chromatictooltips.api.TooltipLines;
-import com.slprime.chromatictooltips.util.TooltipUtils;
 import com.slprime.chromatictooltipscompat.CompatConfig;
 
-import codechicken.nei.util.ItemStackKey;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -37,10 +32,9 @@ public class CompatHander {
     }
 
     private static final List<TooltipLineModifier> TOOLTIPS = new ArrayList<>();
-    private static final Map<ItemStackKey, Set<TooltipLineModifier>> MODIFIERS = new HashMap<>();
 
     public static void registerHandler() {
-        TooltipUtils.registerEventListener(new CompatHander());
+        MinecraftForge.EVENT_BUS.register(new CompatHander());
     }
 
     public static void reload() {
@@ -303,40 +297,13 @@ public class CompatHander {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onItemTooltipEvent(ItemTooltipEvent event) {
-        final ItemStackKey key = new ItemStackKey(event.itemStack);
-        Set<TooltipLineModifier> modifiers = MODIFIERS.get(key);
-
-        if (modifiers != null) {
-            for (TooltipLineModifier rule : modifiers) {
-                event.toolTip.removeIf(
-                    s -> EnumChatFormatting.getTextWithoutFormattingCodes(s)
-                        .contains(rule.line));
+        for (TooltipLineModifier rule : TOOLTIPS) {
+            if (event.toolTip.removeIf(
+                s -> EnumChatFormatting.getTextWithoutFormattingCodes(s)
+                    .contains(rule.line))) {
                 event.toolTip.add(rule.modifier);
-            }
-        } else if (TooltipUtils.getMetaHash() == 0) {
-            MODIFIERS.put(key, modifiers = new HashSet<>());
-
-            for (TooltipLineModifier rule : TOOLTIPS) {
-                if (event.toolTip.removeIf(
-                    s -> EnumChatFormatting.getTextWithoutFormattingCodes(s)
-                        .contains(rule.line))) {
-                    modifiers.add(rule);
-                }
-            }
-
-            for (TooltipLineModifier rule : modifiers) {
-                event.toolTip.add(rule.modifier);
-            }
-        } else {
-            for (TooltipLineModifier rule : TOOLTIPS) {
-                if (event.toolTip.removeIf(
-                    s -> EnumChatFormatting.getTextWithoutFormattingCodes(s)
-                        .contains(rule.line))) {
-                    event.toolTip.add(rule.modifier);
-                }
             }
         }
-
     }
 
     private static String translateToLocal(String key) {
