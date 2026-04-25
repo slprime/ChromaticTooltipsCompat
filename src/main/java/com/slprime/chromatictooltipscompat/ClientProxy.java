@@ -11,7 +11,7 @@ import com.slprime.chromatictooltips.util.TooltipUtils;
 import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
 import com.slprime.chromatictooltipscompat.event.AppleCoreHandler;
 import com.slprime.chromatictooltipscompat.event.AppliedEnergisticsHandler;
-import com.slprime.chromatictooltipscompat.event.CompatHander;
+import com.slprime.chromatictooltipscompat.event.CompatHandler;
 import com.slprime.chromatictooltipscompat.event.DraconicEvolutionHandler;
 import com.slprime.chromatictooltipscompat.event.EnderCoreHandler;
 import com.slprime.chromatictooltipscompat.event.NEIHandler;
@@ -63,15 +63,15 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
             .getResourceManager() instanceof IReloadableResourceManager manager) {
             manager.registerReloadListener(this);
         } else {
-            CompatHander.reload();
+            CompatHandler.reload();
         }
 
-        CompatHander.registerHandler();
+        CompatHandler.registerHandler();
     }
 
     @Override
     public void onResourceManagerReload(IResourceManager resourceManager) {
-        CompatHander.reload();
+        CompatHandler.reload();
     }
 
 }

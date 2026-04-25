@@ -18,7 +18,7 @@ import com.slprime.chromatictooltipscompat.CompatConfig;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-public class CompatHander {
+public class CompatHandler {
 
     protected static class TooltipLineModifier {
 
@@ -34,7 +34,7 @@ public class CompatHander {
     private static TooltipLineModifier[] MODIFIERS = new TooltipLineModifier[0];
 
     public static void registerHandler() {
-        MinecraftForge.EVENT_BUS.register(new CompatHander());
+        MinecraftForge.EVENT_BUS.register(new CompatHandler());
     }
 
     public static void reload() {

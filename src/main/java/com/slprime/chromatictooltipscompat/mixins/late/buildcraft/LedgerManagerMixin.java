@@ -10,6 +10,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.slprime.chromatictooltips.TooltipHandler;
 
+/**
+ * @author SLPrime
+ * @reason Replace BuildCraft ledger tooltip rendering with Chromatic Tooltips.
+ */
+@SuppressWarnings("UnresolvedMixinReference")
 @Mixin(targets = "buildcraft.core.lib.gui.GuiBuildCraft$LedgerManager", remap = false)
 public class LedgerManagerMixin {
 

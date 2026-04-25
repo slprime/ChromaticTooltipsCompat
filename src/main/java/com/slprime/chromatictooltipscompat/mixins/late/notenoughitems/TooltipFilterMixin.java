@@ -1,14 +1,18 @@
 package com.slprime.chromatictooltipscompat.mixins.late.notenoughitems;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
+import com.slprime.chromatictooltips.TooltipHandler;
 import com.slprime.chromatictooltips.TooltipRegistry;
 import com.slprime.chromatictooltips.api.EnchantmentData;
+import com.slprime.chromatictooltips.api.ITooltipComponent;
 import com.slprime.chromatictooltips.api.ItemStats;
 import com.slprime.chromatictooltips.api.TooltipTarget;
+import com.slprime.chromatictooltips.component.DyncamicTextComponent;
 import com.slprime.chromatictooltips.enricher.EnchantmentEnricher;
 import com.slprime.chromatictooltips.enricher.FluidInfoEnricher;
 import com.slprime.chromatictooltips.enricher.ItemInfoEnricher;
@@ -31,8 +35,18 @@ public class TooltipFilterMixin {
         if (target.isItem()) {
             for (Object info : ItemInfoEnricher.getItemInformation(target)) {
                 if (info instanceof String str) {
-                    tooltip.append(str)
-                        .append("\n");
+                    final ITooltipComponent component = TooltipHandler.getTooltipComponent(str);
+                    if (component instanceof DyncamicTextComponent dynamic) {
+                        final String text = dynamic.getHandler()
+                            .get();
+                        if (text != null) {
+                            tooltip.append(text)
+                                .append("\n");
+                        }
+                    } else {
+                        tooltip.append(str)
+                            .append("\n");
+                    }
                 }
             }
 
@@ -56,7 +70,7 @@ public class TooltipFilterMixin {
             }
         }
 
-        return tooltip.toString();
+        return EnumChatFormatting.getTextWithoutFormattingCodes(tooltip.toString());
     }
 
 }
