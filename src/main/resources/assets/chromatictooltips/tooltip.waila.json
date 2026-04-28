@@ -1,0 +1,16 @@
+{
+    "style": {
+        "margin": 0,
+        "padding": 4,
+
+        "decorators": [{
+            "type": "background",
+            "color": "0xBB33397F",
+            "corner": false
+        }, {
+            "type": "border",
+            "color": ["0xAA433FFF", "0xAA433FFF"],
+            "margin": 1
+        }]
+    }
+}
