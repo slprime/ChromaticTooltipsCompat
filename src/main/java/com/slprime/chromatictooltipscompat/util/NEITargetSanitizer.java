@@ -20,8 +20,13 @@ public class NEITargetSanitizer implements ITargetSanitizer {
     public TooltipTarget sanitize(TooltipTarget target) {
 
         if (target.isItem()) {
-            final ItemStack itemStack = StackInfo
-                .normalizeRecipeQueryStack(StackInfo.loadFromNBT(StackInfo.itemStackToNBT(target.getItem())));
+            final ItemStack copyStack = StackInfo.loadFromNBT(StackInfo.itemStackToNBT(target.getItem()));
+
+            if (copyStack == null) {
+                return target;
+            }
+
+            final ItemStack itemStack = StackInfo.normalizeRecipeQueryStack(copyStack);
 
             if (itemStack != null && CompatConfig.gregtechEnabled
                 && Loader.isModLoaded(ModIds.GT5)
