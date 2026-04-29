@@ -19,6 +19,7 @@ public enum Mixins implements IMixins {
 
     CODECHICKEN_NEI(new MixinBuilder("NotEnoughItems").addRequiredMod(TargetedMod.CODECHICKEN_NEI)
         .addClientMixins(
+            "notenoughitems.IGuiContainerCreativeAccessor",
             "notenoughitems.GuiContainerManagerMixin",
             "notenoughitems.LayoutManagerMixin",
             "notenoughitems.TooltipFilterMixin")
