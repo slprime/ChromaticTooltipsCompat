@@ -1,0 +1,146 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.github.slprime",
+    "module": "ChromaticTooltipsCompat",
+    "version": "1.0.23",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "9.4.0"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "com.gtnewhorizons.retrofuturagradle.obfuscation": "mcp",
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "ChromaticTooltipsCompat-1.0.23-dev.jar",
+          "url": "ChromaticTooltipsCompat-1.0.23-dev.jar",
+          "size": 127396,
+          "sha512": "c16132657d5a0c5e8f9a9eba13a6456ca7c6ba87e1bf3f07a1be8e13d061d920fe1721bcacd8e62b2fbd53f68c34c1e4ca5d560e0dd95e42920352ad3801eb70",
+          "sha256": "59bb1e0c9304aa4f414b248189ee24f3024067f110a16ace06f80c5574de1d3b",
+          "sha1": "8e022e6b3874a44f2004de7c5e11a2568f0a4225",
+          "md5": "c5f563c69fb7418159e19b7ec67370de"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "com.gtnewhorizons.retrofuturagradle.obfuscation": "mcp",
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.version": 8,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "io.github.legacymoddingmc",
+          "module": "unimixins",
+          "version": {
+            "requires": "0.2.1"
+          },
+          "thirdPartyCompatibility": {
+            "artifactSelector": {
+              "name": "unimixins",
+              "type": "jar",
+              "extension": "jar",
+              "classifier": "dev"
+            }
+          }
+        },
+        {
+          "group": "com.github.slprime",
+          "module": "ChromaticTooltips",
+          "version": {
+            "requires": "1.0.13"
+          },
+          "thirdPartyCompatibility": {
+            "artifactSelector": {
+              "name": "ChromaticTooltips",
+              "type": "jar",
+              "extension": "jar",
+              "classifier": "dev"
+            }
+          }
+        }
+      ],
+      "dependencyConstraints": [
+        {
+          "group": "com.github.GTNewHorizons",
+          "module": "GTNHLib",
+          "version": {
+            "requires": "0.9.36"
+          },
+          "reason": "fixes duplicate mod errors in java 17 configurations using old gtnhlib"
+        }
+      ],
+      "files": [
+        {
+          "name": "ChromaticTooltipsCompat-1.0.23-dev.jar",
+          "url": "ChromaticTooltipsCompat-1.0.23-dev.jar",
+          "size": 127396,
+          "sha512": "c16132657d5a0c5e8f9a9eba13a6456ca7c6ba87e1bf3f07a1be8e13d061d920fe1721bcacd8e62b2fbd53f68c34c1e4ca5d560e0dd95e42920352ad3801eb70",
+          "sha256": "59bb1e0c9304aa4f414b248189ee24f3024067f110a16ace06f80c5574de1d3b",
+          "sha1": "8e022e6b3874a44f2004de7c5e11a2568f0a4225",
+          "md5": "c5f563c69fb7418159e19b7ec67370de"
+        }
+      ]
+    },
+    {
+      "name": "reobfElements",
+      "attributes": {
+        "com.gtnewhorizons.retrofuturagradle.obfuscation": "srg",
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "ChromaticTooltipsCompat-1.0.23.jar",
+          "url": "ChromaticTooltipsCompat-1.0.23.jar",
+          "size": 129179,
+          "sha512": "8ebedf5b145ece54c230b1c385dce8b190663309f865767325fadc01845033ad92abc92a4eecd75b01ce4e649ceeea11e7713d0b2c4ccd7e9601b9e509d27019",
+          "sha256": "038da7d30e87dc4703aa0c76b6ba050282b0498fde68127bb750f5d276da6c1a",
+          "sha1": "7f3fe766e2f8e9d1bcf21d5cc0d7d75f99fdf000",
+          "md5": "7ca0a40e9f82106d6959423bb7c5de80"
+        }
+      ]
+    },
+    {
+      "name": "sourcesElements",
+      "attributes": {
+        "com.gtnewhorizons.retrofuturagradle.obfuscation": "mcp",
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "ChromaticTooltipsCompat-1.0.23-sources.jar",
+          "url": "ChromaticTooltipsCompat-1.0.23-sources.jar",
+          "size": 76847,
+          "sha512": "f0788115b3dd7acacb1854b890081d3e9d3c3015da4b7b7214fb7cf43a4f8d6d796db5e42a54b2a7bc2dd4d668668f6b40bd15f853407ac7100c04a7ff15266e",
+          "sha256": "c21e0d1195fe8a6848361306dba9bbd74c2b52c0bc6549703538cb1e80f9e7b5",
+          "sha1": "b05dec60b9c350d6dd1ea6f82fedec7a61405e23",
+          "md5": "5e54bd90f990d1a6e72571aa2292e3e1"
+        }
+      ]
+    }
+  ]
+}
