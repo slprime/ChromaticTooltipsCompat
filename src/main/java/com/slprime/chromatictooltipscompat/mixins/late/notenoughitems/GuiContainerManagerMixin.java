@@ -1,5 +1,6 @@
 package com.slprime.chromatictooltipscompat.mixins.late.notenoughitems;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
@@ -35,6 +37,19 @@ import cpw.mods.fml.common.Loader;
 @Mixin(GuiContainerManager.class)
 public class GuiContainerManagerMixin {
 
+    private static final Field SELECTED_TAB_INDEX = findSelectedTabIndex();
+
+    private static Field findSelectedTabIndex() {
+        for (String name : new String[] { "selectedTabIndex", "field_147058_w" }) {
+            try {
+                Field f = GuiContainerCreative.class.getDeclaredField(name);
+                f.setAccessible(true);
+                return f;
+            } catch (NoSuchFieldException ignored) {}
+        }
+        return null;
+    }
+
     @Shadow(remap = false)
     public GuiContainer window;
 
@@ -53,8 +68,8 @@ public class GuiContainerManagerMixin {
         final ItemStack stack = GuiContainerManager.getStackMouseOver(this.window);
         final boolean showTooltip = GuiContainerManager.shouldShowTooltip(this.window);
 
-        if (stack != null && this.window instanceof IGuiContainerCreativeAccessor containerCreative) {
-            tooltip.addAll(this.buildCreativeTabLines(containerCreative, stack));
+        if (stack != null && SELECTED_TAB_INDEX != null && this.window instanceof GuiContainerCreative guiCreative) {
+            tooltip.addAll(this.chromatictooltipscompat$buildCreativeTabLines(guiCreative, stack));
         }
 
         synchronized (instanceTooltipHandlers) {
@@ -83,9 +98,17 @@ public class GuiContainerManagerMixin {
         }
     }
 
-    private List<String> buildCreativeTabLines(IGuiContainerCreativeAccessor containerCreative, ItemStack stack) {
+    private List<String> chromatictooltipscompat$buildCreativeTabLines(GuiContainerCreative containerCreative,
+        ItemStack stack) {
+        final int tabIndex;
 
-        if (containerCreative.getSelectedTabIndex() != CreativeTabs.tabAllSearch.getTabIndex()) {
+        try {
+            tabIndex = (int) SELECTED_TAB_INDEX.get(null);
+        } catch (Throwable e) {
+            return Collections.emptyList();
+        }
+
+        if (tabIndex != CreativeTabs.tabAllSearch.getTabIndex()) {
             return Collections.emptyList();
         }
 
