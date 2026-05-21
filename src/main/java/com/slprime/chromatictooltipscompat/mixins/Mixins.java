@@ -74,7 +74,7 @@ public enum Mixins implements IMixins {
         .setPhase(Phase.LATE)),
 
     BOTANIA(new MixinBuilder("Botania").addRequiredMod(TargetedMod.BOTANIA)
-        .addClientMixins("botania.RenderHelperMixin")
+        .addClientMixins("botania.RenderHelperMixin", "botania.TooltipAdditionDisplayHandlerMixin")
         .setApplyIf(() -> CompatConfig.botaniaEnabled)
         .setPhase(Phase.LATE)),
 

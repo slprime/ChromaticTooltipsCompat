@@ -61,6 +61,7 @@ public class ChromaticTooltipsCompat {
         public static final String TCONSTRUCT = "TConstruct";
         public static final String DRACONIC_EVOLUTION = "DraconicEvolution";
         public static final String APPLIED_ENERGISTICS2 = "appliedenergistics2";
+        public static final String BOTANIA = "Botania";
 
     }
 }
