@@ -7,6 +7,9 @@ import net.minecraft.item.ItemStack;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.slprime.chromatictooltips.TooltipHandler;
 
@@ -24,17 +27,14 @@ public class GuiContainerCanvasMixin {
         return Arrays.asList("");
     }
 
-    /**
-     * @author SLPrime
-     * @reason Replace Better Questing tooltip rendering with Chromatic Tooltips
-     */
-    @Overwrite(remap = false)
-    protected void renderToolTip(ItemStack stack, int x, int y) {
+    @Inject(method = "renderToolTip", at = @At("HEAD"), cancellable = true)
+    protected void renderToolTip(ItemStack stack, int x, int y, CallbackInfo ci) {
         TooltipHandler.drawHoveringText(
             TooltipHandler.builder()
                 .target(stack)
                 .context("betterquesting")
                 .build());
+        ci.cancel();
     }
 
 }
