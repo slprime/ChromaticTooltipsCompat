@@ -185,7 +185,10 @@ public enum Mixins implements IMixins {
         .setPhase(Phase.LATE)),
 
     INDUSTRIAL_CRAFT_2(new MixinBuilder("IndustrialCraft 2").addRequiredMod(TargetedMod.INDUSTRIAL_CRAFT_2)
-        .addClientMixins("industrialcraft2.GuiTooltipHelperMixin", "industrialcraft2.FluidCannerRecipeHandlerMixin")
+        .addClientMixins(
+            "industrialcraft2.GuiTooltipHelperMixin",
+            "industrialcraft2.FluidCannerRecipeHandlerMixin",
+            "industrialcraft2.ItemArmorElectricMixin")
         .setApplyIf(() -> CompatConfig.industrialCraft2Enabled)
         .setPhase(Phase.LATE)),
 
