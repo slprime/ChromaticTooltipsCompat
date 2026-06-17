@@ -37,7 +37,7 @@ public class AppleCoreHandler {
 
         final EntityPlayer player = Minecraft.getMinecraft().thePlayer;
         final FoodValues defaultFoodValues = FoodValues.get(stack);
-        final FoodValues modifiedFoodValues = FoodValues.get(stack, player);
+        final FoodValues modifiedFoodValues = player != null ? FoodValues.get(stack, player) : null;
 
         if (defaultFoodValues == null || modifiedFoodValues == null) {
             return;
