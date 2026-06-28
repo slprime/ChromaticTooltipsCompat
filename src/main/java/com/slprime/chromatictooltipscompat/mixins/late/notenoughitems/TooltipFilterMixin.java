@@ -29,46 +29,50 @@ public class TooltipFilterMixin {
      */
     @Overwrite(remap = false)
     private static String getTooltip(ItemStack itemstack) {
-        final TooltipTarget target = TooltipRegistry.sanitizeTarget(TooltipTarget.ofItem(itemstack));
         final StringBuilder tooltip = new StringBuilder(128);
 
-        if (target.isItem()) {
-            for (Object info : ItemInfoEnricher.getItemInformation(target)) {
-                if (info instanceof String str) {
-                    final ITooltipComponent component = TooltipHandler.getTooltipComponent(str);
-                    if (component instanceof DyncamicTextComponent dynamic) {
-                        final String text = dynamic.getHandler()
-                            .get();
-                        if (text != null) {
-                            tooltip.append(text)
+        try {
+            final TooltipTarget target = TooltipRegistry.sanitizeTarget(TooltipTarget.ofItem(itemstack));
+
+            if (target.isItem()) {
+                for (Object info : ItemInfoEnricher.getItemInformation(target)) {
+                    if (info instanceof String str) {
+                        final ITooltipComponent component = TooltipHandler.getTooltipComponent(str);
+                        if (component instanceof DyncamicTextComponent dynamic) {
+                            final String text = dynamic.getHandler()
+                                .get();
+                            if (text != null) {
+                                tooltip.append(text)
+                                    .append("\n");
+                            }
+                        } else {
+                            tooltip.append(str)
                                 .append("\n");
                         }
-                    } else {
+                    }
+                }
+
+                for (EnchantmentData enchantmentData : EnchantmentEnricher.getEnchantments(target)) {
+                    tooltip.append(enchantmentData.enchantment.getTranslatedName(enchantmentData.level))
+                        .append("\n");
+                    tooltip.append(enchantmentData.hint)
+                        .append("\n");
+                }
+
+                for (ItemStats itemStats : ItemStatsEnricher.getAttributeModifiers(target)) {
+                    tooltip.append(itemStats.getTextLine())
+                        .append("\n");
+                }
+            } else if (target.isFluid()) {
+                for (Object info : FluidInfoEnricher.getFluidInformation(target)) {
+                    if (info instanceof String str) {
                         tooltip.append(str)
                             .append("\n");
                     }
                 }
             }
 
-            for (EnchantmentData enchantmentData : EnchantmentEnricher.getEnchantments(target)) {
-                tooltip.append(enchantmentData.enchantment.getTranslatedName(enchantmentData.level))
-                    .append("\n");
-                tooltip.append(enchantmentData.hint)
-                    .append("\n");
-            }
-
-            for (ItemStats itemStats : ItemStatsEnricher.getAttributeModifiers(target)) {
-                tooltip.append(itemStats.getTextLine())
-                    .append("\n");
-            }
-        } else if (target.isFluid()) {
-            for (Object info : FluidInfoEnricher.getFluidInformation(target)) {
-                if (info instanceof String str) {
-                    tooltip.append(str)
-                        .append("\n");
-                }
-            }
-        }
+        } catch (Throwable ignored) {}
 
         return EnumChatFormatting.getTextWithoutFormattingCodes(tooltip.toString());
     }
