@@ -39,7 +39,7 @@ public class WAILAComponent implements ITooltipComponent {
     public void draw(int x, int y, int availableWidth, TooltipContext context) {
         int originalX = tooltip.getX();
         int originalY = tooltip.getY();
-        tooltip.setX(x);
+        tooltip.setX(x + 1);
         tooltip.setY(y);
 
         GL11.glPushMatrix();
