@@ -22,6 +22,7 @@ import com.slprime.chromatictooltips.TooltipHandler;
 import com.slprime.chromatictooltips.api.ITooltipComponent;
 import com.slprime.chromatictooltips.api.TooltipContext;
 import com.slprime.chromatictooltips.component.SpaceComponent;
+import com.slprime.chromatictooltips.component.TextComponent;
 
 @Mixin(RichTooltip.class)
 public class RichTooltipMixin {
@@ -128,7 +129,10 @@ public class RichTooltipMixin {
             }
         }
 
-        TooltipHandler.drawHoveringText(tooltipComponents);
+        if (!tooltipComponents.isEmpty()) {
+            tooltipComponents.add(0, new TextComponent(""));
+            TooltipHandler.drawHoveringText(tooltipComponents);
+        }
     }
 
     @Inject(
