@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,6 +24,7 @@ import com.slprime.chromatictooltips.api.ITooltipComponent;
 import com.slprime.chromatictooltips.api.TooltipContext;
 import com.slprime.chromatictooltips.component.SpaceComponent;
 import com.slprime.chromatictooltips.component.TextComponent;
+import com.slprime.chromatictooltips.util.TooltipUtils;
 
 @Mixin(RichTooltip.class)
 public class RichTooltipMixin {
@@ -121,7 +123,8 @@ public class RichTooltipMixin {
 
         for (ITextLine line : compiledLines) {
             if (line instanceof TextLine textLine) {
-                tooltipComponents.add(textLine.toString());
+                tooltipComponents
+                    .add(TooltipUtils.applyBaseColorIfAbsent(textLine.toString(), EnumChatFormatting.WHITE));
             } else if (line instanceof Spacer spacer) {
                 tooltipComponents.add(new SpaceComponent(spacer.getSpace()));
             } else {
@@ -130,7 +133,14 @@ public class RichTooltipMixin {
         }
 
         if (!tooltipComponents.isEmpty()) {
-            tooltipComponents.add(0, new TextComponent(""));
+
+            if (!(tooltipComponents.size() > 1 && (tooltipComponents.get(0) instanceof String str
+                && str.startsWith(EnumChatFormatting.WHITE.toString())
+                && tooltipComponents.get(1) instanceof String str2
+                && !str2.startsWith(EnumChatFormatting.WHITE.toString())))) {
+                tooltipComponents.add(0, new TextComponent(""));
+            }
+
             TooltipHandler.drawHoveringText(tooltipComponents);
         }
     }
