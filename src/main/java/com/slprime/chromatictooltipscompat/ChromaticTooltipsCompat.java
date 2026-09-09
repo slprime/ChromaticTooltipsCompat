@@ -14,7 +14,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
     modid = ChromaticTooltipsCompat.MODID,
     version = Tags.VERSION,
     name = "ChromaticTooltipsCompat",
-    dependencies = "required-after:chromatictooltips@[1.0.7,);",
+    dependencies = "required-after:chromatictooltips@[1.0.7,);after:NotEnoughItems@[2.8.134,);",
     acceptedMinecraftVersions = "[1.7.10]")
 public class ChromaticTooltipsCompat {
 

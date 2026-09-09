@@ -6,13 +6,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.slprime.chromatictooltips.api.ITargetSanitizer;
 import com.slprime.chromatictooltips.api.TooltipTarget;
-import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
-import com.slprime.chromatictooltipscompat.CompatConfig;
 
 import codechicken.nei.recipe.StackInfo;
-import cpw.mods.fml.common.Loader;
-import gregtech.api.util.GTUtility;
-import gregtech.common.items.ItemFluidDisplay;
 
 public class NEITargetSanitizer implements ITargetSanitizer {
 
@@ -28,14 +23,15 @@ public class NEITargetSanitizer implements ITargetSanitizer {
 
             final ItemStack itemStack = StackInfo.normalizeRecipeQueryStack(copyStack);
 
-            if (itemStack != null && CompatConfig.gregtechEnabled
-                && Loader.isModLoaded(ModIds.GT5)
-                && itemStack.getItem() instanceof ItemFluidDisplay) {
-                final FluidStack fluidStack = GTUtility.getFluidFromDisplayStack(itemStack);
+            if (itemStack != null && StackInfo.isFluidDisplayItem(itemStack)) {
+                final FluidStack fluidStack = StackInfo.getFluid(itemStack);
 
                 if (fluidStack != null) {
                     final NBTTagCompound aNBT = itemStack.getTagCompound();
-                    final long stackAmount = aNBT != null ? aNBT.getLong("mFluidDisplayAmount") : fluidStack.amount;
+                    final long stackAmount = aNBT != null
+                        ? (aNBT.hasKey("mFluidDisplayAmount") ? aNBT.getLong("mFluidDisplayAmount")
+                            : aNBT.getLong("neiFluidDisplayAmount"))
+                        : fluidStack.amount;
                     return TooltipTarget.ofFluid(fluidStack, stackAmount);
                 }
             }
