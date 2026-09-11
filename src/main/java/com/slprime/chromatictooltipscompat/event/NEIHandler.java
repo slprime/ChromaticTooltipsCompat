@@ -28,8 +28,6 @@ import com.slprime.chromatictooltips.event.TextLinesConverterEvent;
 import com.slprime.chromatictooltips.event.TitleEnricherEvent;
 import com.slprime.chromatictooltips.event.TooltipEnricherEvent;
 import com.slprime.chromatictooltips.util.TooltipUtils;
-import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
-import com.slprime.chromatictooltipscompat.CompatConfig;
 
 import codechicken.lib.gui.GuiDraw;
 import codechicken.lib.gui.GuiDraw.ITooltipLineHandler;
@@ -37,13 +35,12 @@ import codechicken.nei.ItemsTooltipLineHandler;
 import codechicken.nei.NEIClientUtils;
 import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.guihook.IContainerTooltipHandler;
+import codechicken.nei.item.ItemFluidDisplay;
 import codechicken.nei.recipe.RecipeTooltipLineHandler;
 import codechicken.nei.recipe.chain.RecipeChainTooltipLineHandler;
 import codechicken.nei.util.ItemUntranslator;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import gregtech.api.util.GTUtility;
 
 public class NEIHandler {
 
@@ -65,8 +62,10 @@ public class NEIHandler {
             ItemStack itemStack = context.getItem();
 
             if (itemStack == null && context.getTarget()
-                .isFluid() && CompatConfig.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
-                itemStack = GTUtility.getFluidDisplayStack(context.getFluid(), true);
+                .isFluid()) {
+                itemStack = ItemFluidDisplay.createStack(
+                    context.getTarget()
+                        .getFluid());
             }
 
             if (itemStack != null) {
@@ -145,8 +144,8 @@ public class NEIHandler {
     protected ItemStack getItemStackFromContext(TooltipTarget target) {
         ItemStack stack = target.getItem();
 
-        if (stack == null && target.isFluid() && CompatConfig.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
-            stack = GTUtility.getFluidDisplayStack(target.getFluid(), true);
+        if (stack == null && target.isFluid()) {
+            stack = ItemFluidDisplay.createStack(target.getFluid());
         }
 
         return stack;
@@ -199,27 +198,23 @@ public class NEIHandler {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onFluidInfoEnricherEvent(FluidInfoEnricherEvent event) {
-        if (CompatConfig.gregtechEnabled && Loader.isModLoaded(ModIds.GT5)) {
-            final ItemStack stack = GTUtility.getFluidDisplayStack(
-                event.target.getFluid()
-                    .getFluid());
+        final ItemStack stack = ItemFluidDisplay.createStack(event.target.getFluid());
 
-            if (stack == null) {
-                return;
-            }
-
-            List<String> tooltip = new ArrayList<>();
-            tooltip.add("Temporary Name"); // temporary name added for information gathering
-
-            stack.getItem()
-                .addInformation(stack, TooltipUtils.mc().thePlayer, tooltip, false);
-
-            if (!tooltip.isEmpty()) {
-                tooltip.remove(0); // remove temporary name
-            }
-
-            event.tooltip.addAll(tooltip);
+        if (stack == null) {
+            return;
         }
+
+        List<String> tooltip = new ArrayList<>();
+        tooltip.add("Temporary Name"); // temporary name added for information gathering
+
+        stack.getItem()
+            .addInformation(stack, TooltipUtils.mc().thePlayer, tooltip, false);
+
+        if (!tooltip.isEmpty()) {
+            tooltip.remove(0); // remove temporary name
+        }
+
+        event.tooltip.addAll(tooltip);
     }
 
     @SubscribeEvent

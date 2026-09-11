@@ -78,7 +78,8 @@ public class GuiContainerManagerMixin {
             }
         }
 
-        if (CompatConfig.enderCoreEnabled && Loader.isModLoaded(ModIds.ENDERCORE)) {
+        if (CompatConfig.enderCoreEnabled && Loader.isModLoaded(ModIds.ENDERCORE)
+            && Loader.isModLoaded(ModIds.ENDERIO)) {
             // Add Ender IO tooltips
             EnderIOTooltipBridge.handle(tooltip);
         }
