@@ -63,6 +63,7 @@ public class ChromaticTooltipsCompat {
         public static final String DRACONIC_EVOLUTION = "DraconicEvolution";
         public static final String APPLIED_ENERGISTICS2 = "appliedenergistics2";
         public static final String BOTANIA = "Botania";
+        public static final String AVARITIA = "Avaritia";
 
     }
 }

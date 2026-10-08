@@ -11,6 +11,7 @@ import com.slprime.chromatictooltips.util.TooltipUtils;
 import com.slprime.chromatictooltipscompat.ChromaticTooltipsCompat.ModIds;
 import com.slprime.chromatictooltipscompat.event.AppleCoreHandler;
 import com.slprime.chromatictooltipscompat.event.AppliedEnergisticsHandler;
+import com.slprime.chromatictooltipscompat.event.AvaritiaHandler;
 import com.slprime.chromatictooltipscompat.event.BotaniaManaBarPositionTracker;
 import com.slprime.chromatictooltipscompat.event.CompatHandler;
 import com.slprime.chromatictooltipscompat.event.DraconicEvolutionHandler;
@@ -62,6 +63,10 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 
         if (CompatConfig.botaniaEnabled && Loader.isModLoaded(ModIds.BOTANIA)) {
             BotaniaManaBarPositionTracker.registerHandler();
+        }
+
+        if (CompatConfig.avaritiaEnabled && Loader.isModLoaded(ModIds.AVARITIA)) {
+            AvaritiaHandler.registerHandler();
         }
 
         if (TooltipUtils.mc()

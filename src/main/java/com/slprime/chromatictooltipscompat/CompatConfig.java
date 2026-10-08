@@ -43,6 +43,10 @@ public class CompatConfig {
     @Config.DefaultBoolean(true)
     public static boolean avaritiaEnabled;
 
+    @Config.Comment("Show the animated Infinity Attack Damage tooltip on the Infinity Sword instead of its numeric attack damage stat")
+    @Config.DefaultBoolean(true)
+    public static boolean avaritiaInfinityDamageTooltipEnabled;
+
     @Config.Comment("Enable compatibility with Blood Magic: Alchemical Wizardry")
     @Config.DefaultBoolean(true)
     public static boolean AWWayofTimeEnabled;
