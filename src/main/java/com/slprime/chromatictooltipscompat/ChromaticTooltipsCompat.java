@@ -54,7 +54,7 @@ public class ChromaticTooltipsCompat {
     public static class ModIds {
 
         public static final String NEI = "NotEnoughItems";
-        public static final String GT5 = "gregtech";
+        public static final String GT5uNH = "gregtech_nh";
         public static final String ENDERCORE = "endercore";
         public static final String ENDERIO = "EnderIO";
         public static final String APPLECORE = "AppleCore";
