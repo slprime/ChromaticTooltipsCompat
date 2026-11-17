@@ -21,6 +21,7 @@ public enum Mixins implements IMixins {
         .addClientMixins(
             "notenoughitems.GuiContainerManagerMixin",
             "notenoughitems.LayoutManagerMixin",
+            "notenoughitems.OptionCycledMixin",
             "notenoughitems.TooltipFilterMixin")
         .setApplyIf(() -> CompatConfig.notEnoughItemsEnabled)
         .setPhase(Phase.LATE)),
